@@ -1,4 +1,4 @@
-.ref-helper{
+.mode{
     color: white;
     display:flex;
     align-items: center;
@@ -132,3 +132,14 @@ input[type=range] {
   input[type=range]:focus::-ms-fill-upper {
     background: #84C4B7;
   }
+
+  .navbar {
+    width: 100%;
+    padding: 2rem 0 2rem 0;
+    align-items: center;
+    font-size: 1.6rem;
+    &__list{
+      list-style: none;
+      display: flex;
+    }
+}
