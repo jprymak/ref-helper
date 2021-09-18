@@ -1,6 +1,6 @@
 
-function calculateVolumetricFlow(capacity, delta, density, specificHeat, diversityFactor) {
-    return capacity / delta / density / specificHeat * 1000 * diversityFactor // l/s
+function calculateVolumetricFlow(capacity, delta, density, specificHeat) {
+    return capacity / delta / density / specificHeat * 1000 // l/s
 }
 
 function calculateVelocity(volumetricFlow, innerDiameter) {
@@ -48,6 +48,6 @@ function selectPipe(seamPipes, flow, viscosity, density, allowedPressureDrop, al
     }
 }
 
-export {selectPipe, getMediumParameters, calculateVelocity, calculateUnitPipePressureDrop};
+export {selectPipe, getMediumParameters, calculateVelocity, calculateUnitPipePressureDrop, calculateVolumetricFlow};
 
 
