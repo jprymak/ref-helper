@@ -14,7 +14,7 @@ export function RefHelper() {
 
   return (
     <>
-      <NavBar onModeChange={handleModeChange}/>
+      <NavBar onModeChange={handleModeChange} currentMode={currentMode}/>
       {
       (()=>{
         switch(currentMode){

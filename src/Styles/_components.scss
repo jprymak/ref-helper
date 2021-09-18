@@ -135,11 +135,29 @@ input[type=range] {
 
   .navbar {
     width: 100%;
-    padding: 2rem 0 2rem 0;
+    padding: 1.5rem 0 1.5rem 0;
     align-items: center;
-    font-size: 1.6rem;
+    font-size: 1.9rem;
+    background-color: black;
+    
     &__list{
       list-style: none;
       display: flex;
+    }
+    &__list-button{
+      margin: 0 0.8rem;
+      padding: 0.5rem;
+      font-weight: 600;
+      border-radius: 1rem;
+      box-shadow: 0 2rem 5rem rgba(rgb(81, 173, 185), .8);
+      cursor: pointer;
+      &--active{
+        background-image: linear-gradient(to right bottom, rgb(112, 224, 252), rgb(119, 241, 88));
+        transform: scale(1.1);
+      }
+      &:hover{
+        transform: translateY(-0.3rem) skewX(-5deg);
+        transition: transform 0.1s ease-in;
+      }
     }
 }
