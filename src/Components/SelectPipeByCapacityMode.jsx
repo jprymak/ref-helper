@@ -11,8 +11,8 @@ import initialState from "../Data/initialState";
 export function SelectPipeByCapacityMode() {
 
   const [state, dispatch] = useReducer(stateReducer, initialState)
-  
-  const {temperature} = state;
+
+  const { temperature, capacity, delta, allowedPressureDrop, allowedVelocity, pipe, flow, velocity, pressureDrop } = state;
 
   let viscosityInCentipoise = getMediumParameters(
     water,
@@ -45,18 +45,18 @@ export function SelectPipeByCapacityMode() {
   return (
     <div className="mode">
       <SelectionInfo
-        pipe={state.pipe}
-        flow={state.flow}
-        velocity={state.velocity}
-        pressureDrop={state.pressureDrop}
+        pipe={pipe}
+        flow={flow}
+        velocity={velocity}
+        pressureDrop={pressureDrop}
       />
       <Form
         onInputChange={handleInputChange}
         inputs={{
-          capacity: state.capacity,
-          delta: state.delta,
-          allowedPressureDrop: state.allowedPressureDrop,
-          allowedVelocity: state.allowedVelocity
+          capacity,
+          delta,
+          allowedPressureDrop,
+          allowedVelocity
         }}
       />
     </div>

@@ -11,7 +11,7 @@ import {stateReducer} from "../Hooks/stateReducer";
 export function SelectPipeByFlowMode() {
 
   const [state, dispatch] = useReducer(stateReducer, initialState)
-  const {temperature} = state;
+  const {temperature, pipe, velocity, pressureDrop, flow, allowedPressureDrop, allowedVelocity} = state;
 
   let viscosityInCentipoise = getMediumParameters(
     water,
@@ -41,16 +41,16 @@ export function SelectPipeByFlowMode() {
   return (
     <div className="mode">
       <SelectionInfo
-        pipe={state.pipe}
-        velocity={state.velocity}
-        pressureDrop={state.pressureDrop}
+        pipe={pipe}
+        velocity={velocity}
+        pressureDrop={pressureDrop}
       />
       <Form
         onInputChange={handleInputChange}
         inputs={{
-          flow: state.flow,
-          allowedPressureDrop: state.allowedPressureDrop,
-          allowedVelocity: state.allowedVelocity
+          flow,
+          allowedPressureDrop,
+          allowedVelocity
         }}
       />
     </div>
