@@ -6,23 +6,13 @@ import { useState, useEffect, useReducer } from "react";
 import { getMediumParameters } from "../Helpers/index.js";
 import { stateReducer } from "../Hooks/stateReducer";
 import water from "../Data/water";
-
-const initialState = {
-  capacity: 100,
-  temperature: 20,
-  flow: 10,
-  velocity: null,
-  pressureDrop: null,
-  allowedPressureDrop: 300,
-  allowedVelocity: 2,
-  pipe: 15,
-  delta: 4
-}
+import initialState from "../Data/initialState";
 
 export function SelectPipeByCapacityMode() {
 
   const [state, dispatch] = useReducer(stateReducer, initialState)
-  const [temperature, setTemperature] = useState(20);
+  
+  const {temperature} = state;
 
   let viscosityInCentipoise = getMediumParameters(
     water,
