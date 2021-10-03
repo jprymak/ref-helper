@@ -2,11 +2,21 @@ import {
     selectPipe,
     calculateVelocity,
     calculateUnitPipePressureDrop,
-    calculateVolumetricFlow
+    calculateVolumetricFlow,
+    getMediumParameters
   } from "../Helpers/index.js";
 import seamPipes from "../Data/pipes";
+import water from "../Data/water";
 
 export const stateReducer = (state, action) => {
+const {temperature} = state;
+    let viscosityInCentipoise = getMediumParameters(
+        water,
+        temperature
+      ).viscosity;
+      let density = getMediumParameters(water, temperature).density;
+      let dynamicViscosity = viscosityInCentipoise / 1000 / density;
+
     switch (action.type) {
         case 'setFlow': {
             const flow = action.flow > 1000 ? 1000 : action.flow;
@@ -14,8 +24,8 @@ export const stateReducer = (state, action) => {
             const selectedPipe = selectPipe(
                 seamPipes,
                 flow,
-                action.dynamicViscosity,
-                action.density,
+                dynamicViscosity,
+                density,
                 state.allowedPressureDrop,
                 state.allowedVelocity
             )
@@ -23,9 +33,9 @@ export const stateReducer = (state, action) => {
             const velocity = calculateVelocity(flow, seamPipes[selectedPipe].innerDiameter / 1000).toFixed(2);
             const unitPressureDrop = calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
-                action.density,
+                density,
                 velocity,
-                action.dynamicViscosity
+                dynamicViscosity
             ).toFixed(0);
 
 
@@ -34,13 +44,13 @@ export const stateReducer = (state, action) => {
 
         case 'setCapacity': {
             const specificHeat = 4.19;
-            const flow = (calculateVolumetricFlow(action.capacity, state.delta, action.density, specificHeat) * 3.6).toFixed(1)
+            const flow = (calculateVolumetricFlow(action.capacity, state.delta, density, specificHeat) * 3.6).toFixed(1)
 
             const selectedPipe = selectPipe(
                 seamPipes,
                 flow,
-                action.dynamicViscosity,
-                action.density,
+                dynamicViscosity,
+                density,
                 state.allowedPressureDrop,
                 state.allowedVelocity
             )
@@ -48,9 +58,9 @@ export const stateReducer = (state, action) => {
             const velocity = calculateVelocity(flow, seamPipes[selectedPipe].innerDiameter / 1000).toFixed(2);
             const unitPressureDrop = calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
-                action.density,
+                density,
                 velocity,
-                action.dynamicViscosity
+                dynamicViscosity
             ).toFixed(0);
 
 
@@ -59,13 +69,13 @@ export const stateReducer = (state, action) => {
 
         case 'setDelta': {
             const specificHeat = 4.19;
-            const flow = (calculateVolumetricFlow(state.capacity, action.delta, action.density, specificHeat) * 3.6).toFixed(1)
+            const flow = (calculateVolumetricFlow(state.capacity, action.delta, density, specificHeat) * 3.6).toFixed(1)
 
             const selectedPipe = selectPipe(
                 seamPipes,
                 flow,
-                action.dynamicViscosity,
-                action.density,
+                dynamicViscosity,
+                density,
                 state.allowedPressureDrop,
                 state.allowedVelocity
             )
@@ -73,9 +83,9 @@ export const stateReducer = (state, action) => {
             const velocity = calculateVelocity(flow, seamPipes[selectedPipe].innerDiameter / 1000).toFixed(2);
             const unitPressureDrop = calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
-                action.density,
+                density,
                 velocity,
-                action.dynamicViscosity
+                dynamicViscosity
             ).toFixed(0);
 
 
@@ -86,8 +96,8 @@ export const stateReducer = (state, action) => {
             const selectedPipe = selectPipe(
                 seamPipes,
                 state.flow,
-                action.dynamicViscosity,
-                action.density,
+                dynamicViscosity,
+                density,
                 state.allowedPressureDrop,
                 state.allowedVelocity
             )
@@ -95,9 +105,9 @@ export const stateReducer = (state, action) => {
             const velocity = calculateVelocity(state.flow, seamPipes[selectedPipe].innerDiameter / 1000).toFixed(2);
             const unitPressureDrop = calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
-                action.density,
+                density,
                 velocity,
-                action.dynamicViscosity
+                dynamicViscosity
             ).toFixed(0);
 
             return { ...state, pipe: selectedPipe, velocity, pressureDrop: unitPressureDrop }
@@ -107,8 +117,8 @@ export const stateReducer = (state, action) => {
             const selectedPipe = selectPipe(
                 seamPipes,
                 state.flow,
-                action.dynamicViscosity,
-                action.density,
+                dynamicViscosity,
+                density,
                 action.allowedPressureDrop,
                 state.allowedVelocity
             )
@@ -116,9 +126,9 @@ export const stateReducer = (state, action) => {
             const velocity = calculateVelocity(state.flow, seamPipes[selectedPipe].innerDiameter / 1000).toFixed(2);
             const unitPressureDrop = calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
-                action.density,
+                density,
                 velocity,
-                action.dynamicViscosity
+                dynamicViscosity
             ).toFixed(0);
 
             return { ...state, pipe: selectedPipe, allowedPressureDrop: action.allowedPressureDrop, velocity, pressureDrop: unitPressureDrop }
@@ -128,8 +138,8 @@ export const stateReducer = (state, action) => {
             const selectedPipe = selectPipe(
                 seamPipes,
                 state.flow,
-                action.dynamicViscosity,
-                action.density,
+                dynamicViscosity,
+                density,
                 state.allowedPressureDrop,
                 action.allowedVelocity
             )
@@ -137,9 +147,9 @@ export const stateReducer = (state, action) => {
             const velocity = calculateVelocity(state.flow, seamPipes[selectedPipe].innerDiameter / 1000).toFixed(2);
             const unitPressureDrop = calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
-                action.density,
+                density,
                 velocity,
-                action.dynamicViscosity
+                dynamicViscosity
             ).toFixed(0);
 
             return { ...state, pipe: selectedPipe, allowedVelocity: action.allowedVelocity, velocity, pressureDrop: unitPressureDrop }

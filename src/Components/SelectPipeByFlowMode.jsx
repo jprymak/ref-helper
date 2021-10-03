@@ -2,40 +2,24 @@ import React from "react";
 import { Form } from "./Form";
 import { SelectionInfo } from "./SelectionInfo";
 
-import { useState, useEffect, useReducer } from "react";
-import {getMediumParameters} from "../Helpers/index.js";
-import water from "../Data/water";
+import {useEffect, useReducer } from "react";
 import initialState from "../Data/initialState";
+import getDispatchObj from "../Data/dispatchObj";
 import {stateReducer} from "../Hooks/stateReducer";
 
 export function SelectPipeByFlowMode() {
 
   const [state, dispatch] = useReducer(stateReducer, initialState)
-  const {temperature, pipe, velocity, pressureDrop, flow, allowedPressureDrop, allowedVelocity} = state;
-
-  let viscosityInCentipoise = getMediumParameters(
-    water,
-    temperature
-  ).viscosity;
-  let density = getMediumParameters(water, temperature).density;
-  let dynamicViscosity = viscosityInCentipoise / 1000 / density;
+  const {pipe, velocity, pressureDrop, flow, allowedPressureDrop, allowedVelocity} = state;
 
   useEffect(() => {
     dispatch({
-      type: 'setPipe', dynamicViscosity,
-      density
+      type: 'setPipe'
     })
   }, []);
 
   const handleInputChange = (e) => {
-    switch (e.target.name) {
-      case "flow-input": {
-        dispatch({ type: 'setFlow', dynamicViscosity, density, flow: e.target.value })
-      }; break;
-      case "allowed-velocity-input": dispatch({ type: 'setAllowedVelocity', dynamicViscosity, density, allowedVelocity: e.target.value }); break;
-      case "allowed-pressure-drop-input": dispatch({ type: 'setAllowedPressureDrop', dynamicViscosity, density, allowedPressureDrop: e.target.value }); break;
-      default: return;
-    }
+    dispatch(getDispatchObj(e))
   };
 
   return (
