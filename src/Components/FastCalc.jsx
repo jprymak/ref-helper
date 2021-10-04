@@ -7,11 +7,18 @@ import { stateReducer } from "../Hooks/stateReducer";
 import getDispatchObj from "../Data/dispatchObj";
 import initialState from "../Data/initialState";
 
-export function SelectPipeByCapacityMode() {
+export function FastCalc({info, inputs}) {
 
-  const [state, dispatch] = useReducer(stateReducer, initialState)
+const [state, dispatch] = useReducer(stateReducer, initialState)
 
-  const { capacity, delta, allowedPressureDrop, allowedVelocity, pipe, flow, velocity, pressureDrop } = state;
+const convertArrayToObject = (array, source) => {
+    return array.reduce((obj, item) => {
+      return {
+        ...obj,
+        [item]: source[item],
+      };
+    }, {});
+  };
 
   useEffect(() => {
     dispatch({
@@ -25,20 +32,12 @@ export function SelectPipeByCapacityMode() {
 
   return (
     <div className="mode">
-      <SelectionInfo
-        pipe={pipe}
-        flow={flow}
-        velocity={velocity}
-        pressureDrop={pressureDrop}
+      <SelectionInfo 
+      infoProps={convertArrayToObject(info, state)}
       />
       <Form
         onInputChange={handleInputChange}
-        inputs={{
-          capacity,
-          delta,
-          allowedPressureDrop,
-          allowedVelocity
-        }}
+        inputs={convertArrayToObject(inputs, state)}
       />
     </div>
   );

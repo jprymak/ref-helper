@@ -1,28 +1,21 @@
 import React from "react";
 import { useState } from "react";
 
-import { SelectPipeByFlowMode } from "./SelectPipeByFlowMode";
-import { SelectPipeByCapacityMode } from "./SelectPipeByCapacityMode";
 import {NavBar} from "./NavBar";
+import fastCalcModes from "../Data/fastCalcModes";
+import {FastCalc} from "../Components/FastCalc";
 
 export function RefHelper() {
-  const [currentMode, setCurrentMode] = useState("selectByCapacity");
+  const [currentMode, setCurrentMode] = useState(fastCalcModes[1]);
 
-  const handleModeChange =(mode)=>{
-    setCurrentMode(mode)
+  const handleModeChange=(mode)=>{
+    setCurrentMode(fastCalcModes[mode-1])
   }
-
+console.log(currentMode)
   return (
     <>
       <NavBar onModeChange={handleModeChange} currentMode={currentMode}/>
-      {
-      (()=>{
-        switch(currentMode){
-          case "selectByFlow": return <SelectPipeByFlowMode />
-          case "selectByCapacity": return <SelectPipeByCapacityMode />
-        }
-      })()
-    }
+      <FastCalc {...currentMode}/>
     </>
   )
 }
