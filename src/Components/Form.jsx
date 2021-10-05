@@ -2,7 +2,7 @@ import React from "react";
 
 export function Form({ inputs, onInputChange }) {
   return (
-    <form className="form">
+    <form onSubmit={e=>e.preventDefault()} className="form">
       {Object.keys(inputs).map((key) => {
         switch (key) {
           case "flow":
