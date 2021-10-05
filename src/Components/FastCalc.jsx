@@ -11,6 +11,12 @@ export function FastCalc({info, inputs}) {
 
 const [state, dispatch] = useReducer(stateReducer, initialState)
 
+
+useEffect(()=>{
+  dispatch({type: 'setStateToInitial', payload: initialState})
+  dispatch({type: 'setPipe'})
+  },[info, inputs])
+
 const convertArrayToObject = (array, source) => {
     return array.reduce((obj, item) => {
       return {
@@ -19,12 +25,6 @@ const convertArrayToObject = (array, source) => {
       };
     }, {});
   };
-
-  useEffect(() => {
-    dispatch({
-      type: 'setPipe'
-    })
-  }, []);
 
   const handleInputChange = (e) => {
     dispatch(getDispatchObj(e))

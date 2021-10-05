@@ -18,6 +18,11 @@ const {temperature} = state;
       let dynamicViscosity = viscosityInCentipoise / 1000 / density;
 
     switch (action.type) {
+
+        case 'setStateToInitial': { 
+            return { ...action.payload }
+        }
+        
         case 'setFlow': {
             const flow = action.flow > 1000 ? 1000 : action.flow;
 
