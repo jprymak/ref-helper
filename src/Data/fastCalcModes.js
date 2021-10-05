@@ -1,15 +1,21 @@
 const fastCalcModes = [
     {
         id: 1,
-        name: 'Select By Flow',
+        name: 'Select Pipe By Flow',
         info: ['pipe','velocity','pressureDrop'],
         inputs: ['flow','allowedPressureDrop','allowedVelocity'],
     },
     {
         id: 2,
-        name: 'Select By Capacity',
+        name: 'Select Pipe By Capacity',
         info: ['pipe','flow','velocity','pressureDrop'],
         inputs: ['capacity','delta','allowedPressureDrop','allowedVelocity']
+    },
+    {
+        id: 3,
+        name: 'Count flow',
+        info: ['flow'],
+        inputs: ['capacity','delta']
     }
 ]
 
