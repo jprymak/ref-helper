@@ -66,11 +66,11 @@ export function Form({ inputs, onInputChange }) {
                 <input
                   onChange={onInputChange}
                   name="delta-input"
+                  
+                  type="number"
+                  min="0"
+                  max="50"
                   value={inputs[key]}
-                  type="range"
-                  step="1"
-                  min="1"
-                  max="20"
                 />
                 <span>K</span>
               </React.Fragment>

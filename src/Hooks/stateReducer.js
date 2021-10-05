@@ -74,7 +74,9 @@ const {temperature} = state;
 
         case 'setDelta': {
             const specificHeat = 4.19;
-            const flow = (calculateVolumetricFlow(state.capacity, action.delta, density, specificHeat) * 3.6).toFixed(1)
+            const delta = action.delta >= 50 ? 50 : action.delta;
+        
+            const flow = (calculateVolumetricFlow(state.capacity, delta, density, specificHeat) * 3.6).toFixed(1)
 
             const selectedPipe = selectPipe(
                 seamPipes,
@@ -84,7 +86,7 @@ const {temperature} = state;
                 state.allowedPressureDrop,
                 state.allowedVelocity
             )
-            if (selectedPipe === undefined) return { ...state, flow: "", pipe: "", velocity: "", pressureDrop: "" }
+            if (selectedPipe === undefined) return { ...state, flow: "", pipe: "", velocity: "", pressureDrop: "", delta }
             const velocity = calculateVelocity(flow, seamPipes[selectedPipe].innerDiameter / 1000).toFixed(2);
             const unitPressureDrop = calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
@@ -94,7 +96,7 @@ const {temperature} = state;
             ).toFixed(0);
 
 
-            return { ...state, delta: action.delta, flow, pipe: selectedPipe, velocity, pressureDrop: unitPressureDrop }
+            return { ...state, delta, flow, pipe: selectedPipe, velocity, pressureDrop: unitPressureDrop }
         }
         case 'setPipe': {
 
