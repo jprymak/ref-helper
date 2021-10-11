@@ -13,7 +13,7 @@ const fastCalcModes = [
     },
     {
         id: 3,
-        name: 'Count flow',
+        name: 'Calculate flow',
         info: ['flow'],
         inputs: ['capacity','delta']
     }
