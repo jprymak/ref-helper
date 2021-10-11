@@ -1,3 +1,4 @@
+![cover](https://jprymak.github.io/ref-helper/og.png)
 # Ref-helper
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
