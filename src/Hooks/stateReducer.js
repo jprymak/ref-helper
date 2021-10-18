@@ -4,9 +4,9 @@ import {
     calculateUnitPipePressureDrop,
     calculateVolumetricFlow,
     getMediumParameters
-  } from '../Helpers/index.js';
-import seamPipes from '../Data/pipes';
-import water from '../Data/water';
+  } from "../Helpers/index.js";
+import seamPipes from "../Data/pipes";
+import water from "../Data/water";
 
 export const stateReducer = (state, action) => {
 const {temperature} = state;
@@ -19,10 +19,10 @@ const {temperature} = state;
 
     switch (action.type) {
 
-        case 'setStateToInitial': {
+        case "setStateToInitial": {
             return { ...action.payload };
         }
-        case 'setFlow': {
+        case "setFlow": {
             const flow = action.flow > 1000 ? 1000 : action.flow;
 
             const selectedPipe = selectPipe(
@@ -33,7 +33,7 @@ const {temperature} = state;
                 state.allowedPressureDrop,
                 state.allowedVelocity
             );
-            if (selectedPipe === undefined) return { ...state, flow, pipe: '', velocity: '', pressureDrop: '' };
+            if (selectedPipe === undefined) return { ...state, flow, pipe: "", velocity: "", pressureDrop: "" };
             const velocity = calculateVelocity(flow, seamPipes[selectedPipe].innerDiameter / 1000).toFixed(2);
             const unitPressureDrop = calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
@@ -45,7 +45,7 @@ const {temperature} = state;
 
             return { ...state, flow, pipe: selectedPipe, velocity, pressureDrop: unitPressureDrop };
         }
-        case 'setCapacity': {
+        case "setCapacity": {
             const specificHeat = 4.19;
             const flow = (calculateVolumetricFlow(action.capacity, state.delta, density, specificHeat) * 3.6).toFixed(1);
 
@@ -57,7 +57,7 @@ const {temperature} = state;
                 state.allowedPressureDrop,
                 state.allowedVelocity
             );
-            if (selectedPipe === undefined) return { ...state, flow: '', pipe: '', velocity: '', pressureDrop: '' };
+            if (selectedPipe === undefined) return { ...state, flow: "", pipe: "", velocity: "", pressureDrop: "" };
             const velocity = calculateVelocity(flow, seamPipes[selectedPipe].innerDiameter / 1000).toFixed(2);
             const unitPressureDrop = calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
@@ -70,7 +70,7 @@ const {temperature} = state;
             return { ...state, capacity: action.capacity, flow, pipe: selectedPipe, velocity, pressureDrop: unitPressureDrop };
         }
 
-        case 'setDelta': {
+        case "setDelta": {
             const specificHeat = 4.19;
             const delta = action.delta >= 50 ? 50 : action.delta;
             const flow = (calculateVolumetricFlow(state.capacity, delta, density, specificHeat) * 3.6).toFixed(1);
@@ -83,7 +83,7 @@ const {temperature} = state;
                 state.allowedPressureDrop,
                 state.allowedVelocity
             );
-            if (selectedPipe === undefined) return { ...state, flow: '', pipe: '', velocity: '', pressureDrop: '', delta };
+            if (selectedPipe === undefined) return { ...state, flow: "", pipe: "", velocity: "", pressureDrop: "", delta };
             const velocity = calculateVelocity(flow, seamPipes[selectedPipe].innerDiameter / 1000).toFixed(2);
             const unitPressureDrop = calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
@@ -95,7 +95,7 @@ const {temperature} = state;
 
             return { ...state, delta, flow, pipe: selectedPipe, velocity, pressureDrop: unitPressureDrop };
         }
-        case 'setPipe': {
+        case "setPipe": {
 
             const selectedPipe = selectPipe(
                 seamPipes,
@@ -116,7 +116,7 @@ const {temperature} = state;
 
             return { ...state, pipe: selectedPipe, velocity, pressureDrop: unitPressureDrop };
         }
-        case 'setAllowedPressureDrop': {
+        case "setAllowedPressureDrop": {
 
             const selectedPipe = selectPipe(
                 seamPipes,
@@ -126,7 +126,7 @@ const {temperature} = state;
                 action.allowedPressureDrop,
                 state.allowedVelocity
             );
-            if (selectedPipe === undefined) return { ...state, pipe: '', velocity: '', pressureDrop: '', allowedPressureDrop: action.allowedPressureDrop };
+            if (selectedPipe === undefined) return { ...state, pipe: "", velocity: "", pressureDrop: "", allowedPressureDrop: action.allowedPressureDrop };
             const velocity = calculateVelocity(state.flow, seamPipes[selectedPipe].innerDiameter / 1000).toFixed(2);
             const unitPressureDrop = calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
@@ -137,7 +137,7 @@ const {temperature} = state;
 
             return { ...state, pipe: selectedPipe, allowedPressureDrop: action.allowedPressureDrop, velocity, pressureDrop: unitPressureDrop };
         }
-        case 'setAllowedVelocity': {
+        case "setAllowedVelocity": {
 
             const selectedPipe = selectPipe(
                 seamPipes,
@@ -147,7 +147,7 @@ const {temperature} = state;
                 state.allowedPressureDrop,
                 action.allowedVelocity
             );
-            if (selectedPipe === undefined) return { ...state, pipe: '', velocity: '', pressureDrop: '', allowedVelocity: action.allowedVelocity };
+            if (selectedPipe === undefined) return { ...state, pipe: "", velocity: "", pressureDrop: "", allowedVelocity: action.allowedVelocity };
             const velocity = calculateVelocity(state.flow, seamPipes[selectedPipe].innerDiameter / 1000).toFixed(2);
             const unitPressureDrop = calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,

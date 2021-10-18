@@ -8,6 +8,6 @@ const initialState = {
   allowedVelocity: 2,
   pipe: 15,
   delta: 4
-}
+};
 
 export default initialState;

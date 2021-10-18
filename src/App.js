@@ -1,9 +1,8 @@
-import './App.scss';
+import "./App.scss";
 
 import {RefHelper} from "./Components/RefHelper";
 function App() {
- 
-return <RefHelper/>
+return <RefHelper/>;
 }
 
 export default App;

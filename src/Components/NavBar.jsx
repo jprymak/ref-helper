@@ -21,7 +21,7 @@ export function NavBar({ onModeChange, currentMode }) {
                   {name}
                 </button>
               </li>
-            )
+            );
           })
         }
       </ul>

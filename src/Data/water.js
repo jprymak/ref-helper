@@ -131,5 +131,5 @@ const water = {
     "119" : {  density: 944, heatCapacity: 4.24, conductivity: 0.6833, viscosity: 0.236 },
     "120" : {  density: 944, heatCapacity: 4.242, conductivity: 0.6835, viscosity: 0.234 },
     "121" : {  density: 943, heatCapacity: 4.244, conductivity: 0.6836, viscosity: 0.232 },
-}
+};
 export default water;

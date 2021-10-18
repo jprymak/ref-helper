@@ -16,6 +16,6 @@ const seamPipes = {
     "350": { externalDiameter: 355.6, wallThickness: 5.6, innerDiameter: 344.4 },
     "400": { externalDiameter: 406.4, wallThickness: 6.3, innerDiameter: 393.8 },
     "450": { externalDiameter: 457, wallThickness: 6.3, innerDiameter: 444.4 }
-}
+};
 
 export default seamPipes;
