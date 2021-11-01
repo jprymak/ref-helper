@@ -1,4 +1,7 @@
 import React from "react";
+
+import { useGlobalContext } from "../context";
+
 import { Form } from "./Form";
 import { SelectionInfo } from "./SelectionInfo";
 
@@ -8,7 +11,7 @@ import getDispatchObj from "../Data/dispatchObj";
 import initialState from "../Data/initialState";
 
 export function FastCalc({info, inputs}) {
-
+const {closeSubmenu} = useGlobalContext();
 const [state, dispatch] = useReducer(stateReducer, initialState);
 
 
@@ -31,7 +34,7 @@ const convertArrayToObject = (array, source) => {
   };
 
   return (
-    <div className="mode">
+    <div className="mode" onMouseOver={closeSubmenu}>
       <SelectionInfo
       infoProps={convertArrayToObject(info, state)}
       />
