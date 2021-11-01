@@ -5,9 +5,9 @@ import ReactDOM from "react-dom";
 import { useGlobalContext } from "../context";
 
 import links from "../Data/sublinks";
-import {useLocation} from "react-router-dom";
+import {NavLink, useLocation} from "react-router-dom";
 
-export function NavBar({currentMode}) {
+export function NavBar({currentMode, onModeChange}) {
 const {openSubmenu, closeSubmenu} = useGlobalContext();
 const location = useLocation();
 
@@ -29,12 +29,11 @@ const handleSubmenu = (e) => {
     <nav className="navbar" onMouseOver={handleSubmenu}>
       <ul className="navbar__list">
         {
-          links.map(mode => {
-            const {id,page, icon, url} = mode;
+          links.map(link => {
+            const {id,page, icon, url, modes} = link;
             return (
-              <li key={id} className={`navbar__list-item ${location.pathname===url ? "navbar__list-item--active" : ""}`} onMouseOver={displaySubmenu}>
-                {icon}
-                {page}
+              <li key={id} className={`${location.pathname===url ? "navbar__list-item--active" : ""}`} onMouseOver={displaySubmenu}>
+                <NavLink onClick={page!=="home" ? ()=>onModeChange(modes[0].id) :  ()=>onModeChange(null)} className="navbar__list-item" to={url}>{icon}{page}</NavLink>
               </li>
             );
           })

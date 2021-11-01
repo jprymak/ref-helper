@@ -1,7 +1,13 @@
 
-import { FaFolder, FaCalculator } from "react-icons/fa";
+import { FaFolder, FaCalculator, FaHome } from "react-icons/fa";
 
 const links = [
+  {
+    id: 0,
+    page: "home",
+    url: "/ref-helper/",
+    icon:  <FaHome className="navbar__icon"/>,
+  },
   {
     id: 1,
     page: "fast calc",
