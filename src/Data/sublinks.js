@@ -5,7 +5,7 @@ const links = [
   {
     id: 1,
     page: "fast calc",
-    url: "/fast-calc",
+    url: "/ref-helper/fast-calc",
     icon:  <FaCalculator className="navbar__icon"/>,
     modes: [
         {
@@ -31,7 +31,7 @@ const links = [
   {
     id: 2,
     page: "projects",
-    url: "/projects",
+    url: "/ref-helper/projects",
     icon:  <FaFolder className="navbar__icon"/>,
     modes: [
       {

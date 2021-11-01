@@ -33,10 +33,10 @@ export function RefHelper() {
     <Router>
       <NavBar currentMode={currentMode}/>
       <Switch>
-        <Route path="/fast-calc">
+        <Route path="/ref-helper/fast-calc">
         <FastCalc {...currentMode}/>
           </Route>
-          <Route path="/projects">
+          <Route path="/ref-helper/projects">
         <Projects {...currentMode}/>
           </Route>
       </Switch>
