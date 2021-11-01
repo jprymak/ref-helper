@@ -1,13 +1,11 @@
 import React from "react";
-import ReactDOM from "react-dom";
 
+import { useGlobalContext } from "../../context";
 
-import { useGlobalContext } from "../context";
-
-import links from "../Data/sublinks";
+import links from "../../Data/sublinks";
 import {NavLink, useLocation} from "react-router-dom";
 
-export function NavBar({currentMode, onModeChange}) {
+export default function NavBar({onModeChange}) {
 const {openSubmenu, closeSubmenu} = useGlobalContext();
 const location = useLocation();
 
@@ -42,5 +40,3 @@ const handleSubmenu = (e) => {
     </nav>
   );
 }
-
-export default NavBar;

@@ -1,6 +1,6 @@
 import React from "react";
 
-export function Form({ inputs, onInputChange }) {
+export default function Form({ inputs, onInputChange }) {
   return (
     <form onSubmit={e=>e.preventDefault()} className="form">
       {Object.keys(inputs).map((key) => {

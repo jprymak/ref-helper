@@ -27,7 +27,7 @@ function App() {
     return (
       <>
       <Router>
-        <NavBar currentMode={currentMode} onModeChange={handleModeChange}/>
+        <NavBar onModeChange={handleModeChange}/>
         <Switch>
           <Route path="/ref-helper/fast-calc">
           <FastCalc {...currentMode}/>
