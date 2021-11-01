@@ -1,7 +1,7 @@
 import React from "react";
 
 
-export function SelectionInfo({
+export default function SelectionInfo({
   infoProps
 }) {
   return (

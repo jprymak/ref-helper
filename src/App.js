@@ -10,7 +10,7 @@ import {
 import {NavBar} from "./Components/NavBar";
 import links from "./Data/sublinks";
 import {Home, FastCalc, Projects} from "./Pages";
-import { Submenu } from "./Components/SubMenu";
+import { Submenu } from "./Components/Submenu";
 
 function App() {
     const [currentMode, setCurrentMode] = useState(links[1].modes[0]);

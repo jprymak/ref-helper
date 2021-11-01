@@ -4,9 +4,9 @@ import {
   NavLink
 } from "react-router-dom";
 
-import { useGlobalContext } from "../context";
+import { useGlobalContext } from "../../context";
 
-export function Submenu({ onModeChange, currentMode }) {
+export default function Submenu({ onModeChange, currentMode }) {
     const { isSubmenuOpen, page: { page,modes, url }, location } = useGlobalContext();
     const container = useRef(null);
     useEffect(() => {

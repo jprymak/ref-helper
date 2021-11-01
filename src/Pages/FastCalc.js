@@ -2,7 +2,7 @@ import React from "react";
 
 import { useGlobalContext } from "../context";
 
-import { Form } from "../Components/Form/Form";
+import { Form } from "../Components/Form";
 import { SelectionInfo } from "../Components/SelectionInfo";
 
 import { useEffect, useReducer } from "react";
