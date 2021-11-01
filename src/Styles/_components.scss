@@ -163,18 +163,25 @@ input[type=range] {
       color: white;
     }
     &__list-item{
-      text-decoration: none;
-      color: inherit;
-      margin: 0 1rem;
-      text-transform: capitalize;
-      cursor: pointer;
-      padding: 1rem 0;
       &--active{
         border-bottom: 2px solid rgb(112, 224, 252)
       }
     }
+    &__link{
+      display: flex;
+      text-decoration: none;
+      color: inherit;
+      text-transform: capitalize;
+      margin: 0.5rem 1rem;
+      @media screen and (max-width: "400px"){
+        gap: 0.3rem;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    }
     &__icon{
-      margin-right: 0.5rem;
+      margin-right: 0.4rem;
     }
 }
 

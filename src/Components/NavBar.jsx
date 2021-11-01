@@ -32,8 +32,8 @@ const handleSubmenu = (e) => {
           links.map(link => {
             const {id,page, icon, url, modes} = link;
             return (
-              <li key={id} className={`${location.pathname===url ? "navbar__list-item--active" : ""}`} onMouseOver={displaySubmenu}>
-                <NavLink onClick={page!=="home" ? ()=>onModeChange(modes[0].id) :  ()=>onModeChange(null)} className="navbar__list-item" to={url}>{icon}{page}</NavLink>
+              <li key={id} className={`navbar__list-item ${location.pathname===url ? "navbar__list-item--active" : ""}`} onMouseOver={displaySubmenu}>
+                <NavLink onClick={page!=="home" ? ()=>onModeChange(modes[0].id) :  ()=>onModeChange(null)} className="navbar__link" to={url}>{icon}{page}</NavLink>
               </li>
             );
           })
