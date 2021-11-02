@@ -23,7 +23,6 @@
   }
 }
 
-
 .form{
     background-color: black;
     padding: 3rem;
@@ -46,21 +45,7 @@
     width: 100%;
 }
 
-.selection-info{
-    background-color: black;
-    font-size: 2.5rem;
-    border: 2px solid black;
-    border-radius: 5px;
-    padding: 1.5rem;
-    display: grid;
-    row-gap: 0.5rem;
-    margin: 4rem 2rem;
-    box-shadow: 3px 3px 3px rgb(51, 109, 119);
-}
 
-.selection-info__item{
-    border-bottom: 1px solid rgb(112, 224, 252);
-}
 
 input[type=range] {
     height: 0px;
