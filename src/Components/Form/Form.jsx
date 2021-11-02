@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./index.scss";
+
 export default function Form({ inputs, onInputChange }) {
   return (
     <form onSubmit={e=>e.preventDefault()} className="form">
