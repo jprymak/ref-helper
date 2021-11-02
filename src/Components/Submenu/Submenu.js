@@ -6,6 +6,7 @@ import {
 
 import { useGlobalContext } from "../../context";
 
+import "./index.scss";
 
 export default function Submenu({ onModeChange, currentMode }) {
     const { isSubmenuOpen, page: { page,modes, url }, location } = useGlobalContext();
