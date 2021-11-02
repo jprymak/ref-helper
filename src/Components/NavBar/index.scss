@@ -1,0 +1,34 @@
+.navbar {
+    width: 100%;
+    padding: 1rem 0;
+    align-items: center;
+    font-size: 1.9rem;
+    background-color: black;
+    &__list{
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      color: white;
+    }
+    &__list-item{
+      &--active{
+        border-bottom: 2px solid rgb(112, 224, 252)
+      }
+    }
+    &__link{
+      display: flex;
+      text-decoration: none;
+      color: inherit;
+      text-transform: capitalize;
+      margin: 0.5rem 1rem;
+      @media screen and (max-width: "400px"){
+        gap: 0.3rem;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    &__icon{
+      margin-right: 0.4rem;
+    }
+}

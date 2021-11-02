@@ -5,6 +5,8 @@ import { useGlobalContext } from "../../context";
 import links from "../../Data/sublinks";
 import {NavLink, useLocation} from "react-router-dom";
 
+import "./index.scss";
+
 export default function NavBar({onModeChange}) {
 const {openSubmenu, closeSubmenu} = useGlobalContext();
 const location = useLocation();
