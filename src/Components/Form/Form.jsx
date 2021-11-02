@@ -66,7 +66,6 @@ export default function Form({ inputs, onInputChange }) {
                 <input
                   onChange={onInputChange}
                   name="delta-input"
-                  
                   type="number"
                   min="0"
                   max="50"
@@ -90,6 +89,7 @@ export default function Form({ inputs, onInputChange }) {
                   <span>kW</span>
                 </React.Fragment>
               );
+              default: return null;
         }
       })}
     </form>

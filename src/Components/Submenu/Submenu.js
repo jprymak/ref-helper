@@ -1,10 +1,11 @@
 
-import React, { useState, useRef, useEffect } from "react";
+import React, {useRef, useEffect } from "react";
 import {
   NavLink
 } from "react-router-dom";
 
 import { useGlobalContext } from "../../context";
+
 
 export default function Submenu({ onModeChange, currentMode }) {
     const { isSubmenuOpen, page: { page,modes, url }, location } = useGlobalContext();
