@@ -1,3 +1,5 @@
+@import "../../Styles/variables";
+
 .submenu {
     background: white;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -31,7 +33,7 @@
       border-radius: 1rem;
       cursor: pointer;
       &--active{
-        background-image: linear-gradient(to right bottom, rgb(112, 224, 252), rgb(119, 241, 88));
+        background-image: $basic-gradient;
       }
       &:hover{
         transform: translateY(-0.3rem) skewX(-5deg);
