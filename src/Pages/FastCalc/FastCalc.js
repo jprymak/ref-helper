@@ -1,15 +1,15 @@
 import React from "react";
 
-import { useGlobalContext } from "../context";
+import { useGlobalContext } from "context";
 
-import { Form } from "../Components/Form";
-import { SelectionInfo } from "../Components/SelectionInfo";
-import { Input } from "../Components/Input";
+import { Form } from "Components/Form";
+import { SelectionInfo } from "Components/SelectionInfo";
+import { Input } from "Components/Input";
 
 import { useEffect, useReducer } from "react";
-import { stateReducer } from "../Hooks/stateReducer";
-import getDispatchObj from "../Data/dispatchObj";
-import initialState from "../Data/initialState";
+import { stateReducer } from "Hooks/stateReducer";
+import getDispatchObj from "Data/dispatchObj";
+import initialState from "Data/initialState";
 
 export default function FastCalc({ info, inputs }) {
   const { closeSubmenu } = useGlobalContext();
