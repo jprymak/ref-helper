@@ -43,7 +43,7 @@ export default function FastCalc({ info, inputs }) {
           <Input
             key={key}
             name="flow-input"
-            label="Flow"
+            label={`Flow (${convertedInputs[key]})`}
             onInputChange={handleInputChange}
             type="number"
             min={0}
