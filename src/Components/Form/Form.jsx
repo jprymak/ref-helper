@@ -4,8 +4,11 @@ import "./index.scss";
 
 export default function Form({children}) {
   return (
-    <form onSubmit={(e) => e.preventDefault()} className="form">
+    <div className="form-wrapper">
+<form onSubmit={(e) => e.preventDefault()} className="form">
       {children}
     </form>
+    </div>
+    
   );
 }
