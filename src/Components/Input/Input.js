@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./index.scss";
+
 function Input({name, label, onInputChange, type, min, max, value, unit, step}) {
     return (
         <>
