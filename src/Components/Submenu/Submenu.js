@@ -9,7 +9,7 @@ import { useGlobalContext } from "../../context";
 import "./index.scss";
 
 export default function Submenu({ onModeChange, currentMode }) {
-    const { isSubmenuOpen, page: { page,modes, url }, location } = useGlobalContext();
+    const { isSubmenuOpen, page: { page,modes, url }, location , closeSubmenu} = useGlobalContext();
     const container = useRef(null);
     useEffect(() => {
         const submenu = container.current;
@@ -17,6 +17,11 @@ export default function Submenu({ onModeChange, currentMode }) {
         submenu.style.left = `${center}px`;
         submenu.style.top = `${bottom}px`;
     }, [page, location]);
+
+    const handleNavLinkClick = (id) =>{
+      onModeChange(id);
+      closeSubmenu();
+    };
     return(
 <aside className={isSubmenuOpen ? "submenu show" : "submenu"} ref={container}>
     <h3 className="submenu__heading">{page}</h3>
@@ -24,7 +29,7 @@ export default function Submenu({ onModeChange, currentMode }) {
         <NavLink key={id} className={`sublinks__sublink ${(currentMode.id === id
           ? "sublinks__sublink--active"
           : "")}`}
-        onClick={() => onModeChange(id)} to={url}>{name}</NavLink>
+        onClick={() => handleNavLinkClick(id)} to={url}>{name}</NavLink>
     ))}</div>
     </aside>
     );

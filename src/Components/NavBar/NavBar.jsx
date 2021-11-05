@@ -25,6 +25,16 @@ const handleSubmenu = (e) => {
     closeSubmenu();
   }
 };
+
+const handleNavLinkClick = (page, modes) =>{
+if(page!=="home"){
+  onModeChange(modes[0].id);
+}
+else{
+  onModeChange(null);
+}
+closeSubmenu();
+};
   return (
     <nav className="navbar" onMouseOver={handleSubmenu}>
       <ul className="navbar__list">
@@ -33,7 +43,7 @@ const handleSubmenu = (e) => {
             const {id,page, icon, url, modes} = link;
             return (
               <li key={id} className={`navbar__list-item ${location.pathname===url ? "navbar__list-item--active" : ""}`} onMouseOver={displaySubmenu}>
-                <NavLink onClick={page!=="home" ? ()=>onModeChange(modes[0].id) :  ()=>onModeChange(null)} className="navbar__link" to={url}>{icon}{page}</NavLink>
+                <NavLink onClick={()=>handleNavLinkClick(page,modes)} className="navbar__link" to={url}>{icon}{page}</NavLink>
               </li>
             );
           })
