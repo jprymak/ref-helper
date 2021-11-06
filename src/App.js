@@ -11,6 +11,7 @@ import {NavBar} from "./Components/NavBar";
 import links from "./Data/sublinks";
 import {Home, FastCalc, Projects} from "./Pages";
 import { Submenu } from "./Components/Submenu";
+import {Sidebar} from "Components/Sidebar";
 
 function App() {
     const [currentMode, setCurrentMode] = useState(links[1].modes[0]);
@@ -28,6 +29,7 @@ function App() {
       <>
       <Router>
         <NavBar onModeChange={handleModeChange}/>
+        <Sidebar onModeChange={handleModeChange} currentMode={currentMode}/>
         <Switch>
           <Route path="/ref-helper/fast-calc">
           <FastCalc {...currentMode}/>

@@ -9,7 +9,7 @@ function Sublink({active, handleSublinkClick, id, name, url}) {
     });
     return (
         <li className={classes}>
-            <Link key={id} 
+            <Link 
         onClick={() => handleSublinkClick(id)} to={url}>{name}</Link>
         </li>
     );

@@ -4,7 +4,7 @@ import { useGlobalContext } from "context";
 
 import { Form } from "Components/Form";
 import { SelectionInfo } from "Components/SelectionInfo";
-import { Input } from "Components/Input";
+import { Input } from "Components/Form/Input";
 
 import { useEffect, useReducer } from "react";
 import { stateReducer } from "Hooks/stateReducer";
@@ -104,7 +104,7 @@ export default function FastCalc({ info, inputs }) {
           <Input
             key={key}
             name="capacity-input"
-            label={`Delta (${convertedInputs[key]})`}
+            label={`Capacity (${convertedInputs[key]})`}
             onInputChange={handleInputChange}
             type="number"
             min={0}

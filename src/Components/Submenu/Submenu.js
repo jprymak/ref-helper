@@ -4,7 +4,7 @@ import React, {useRef, useEffect } from "react";
 
 import { useGlobalContext } from "../../context";
 
-import {Sublink} from "Components/Sublink";
+import {Sublink} from "Components/Submenu/Sublink";
 
 import "./index.scss";
 
@@ -26,7 +26,7 @@ export default function Submenu({ onModeChange, currentMode }) {
 <aside className={isSubmenuOpen ? "submenu show" : "submenu"} ref={container}>
     <h3 className="submenu__heading">{page}</h3>
     <ul className="sublinks">{modes.map(({id, name})=>(
-        <Sublink handleSublinkClick={handleSublinkClick} active={currentMode.id===id} id={id} name={name} url={url}/>
+        <Sublink key={id}  handleSublinkClick={handleSublinkClick} active={currentMode.id===id} id={id} name={name} url={url}/>
     ))}</ul>
     </aside>
     );
