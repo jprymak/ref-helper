@@ -2,6 +2,8 @@ import React from "react";
 import { FaTimes } from "react-icons/fa";
 import { useGlobalContext } from "context";
 
+import classNames from "classnames";
+
 import links from "Data/sublinks";
 
 import {Sublink} from "./Sublink";
@@ -11,6 +13,11 @@ import "./index.scss";
 export default function Sidebar({onModeChange,currentMode}){
   const { isSidebarOpen, closeSidebar} = useGlobalContext();
 
+  const classes=classNames({
+    "sidebar-wrapper": true,
+    "sidebar-wrapper--show": isSidebarOpen
+  });
+
   const handleSublinkClick = (id) =>{
     onModeChange(id);
     closeSidebar();
@@ -18,9 +25,7 @@ export default function Sidebar({onModeChange,currentMode}){
 
   return (
     <div
-      className={`${
-        isSidebarOpen ? "sidebar-wrapper show" : "sidebar-wrapper"
-      }`}
+      className={classes}
     >
       <aside className="sidebar">
         <button className="sidebar__close-btn" onClick={closeSidebar}>
