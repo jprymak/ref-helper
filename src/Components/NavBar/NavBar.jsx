@@ -33,7 +33,6 @@ export default function NavBar({ onModeChange }) {
     else {
       onModeChange(null);
     }
-    closeSubmenu();
   };
   return (
     <nav className="navbar" onMouseOver={handleSubmenu}>
