@@ -1,0 +1,17 @@
+
+@import "Styles/variables";
+
+.Home{
+    color: black;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    font-size: 1.9rem;
+    padding: 2rem 5rem;
+    background-image: $basic-gradient;
+    &__heading{
+      margin-bottom: 1rem;
+    }
+  }
+  
