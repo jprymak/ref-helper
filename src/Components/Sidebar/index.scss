@@ -31,7 +31,7 @@
       font-size: 2rem;
       background: transparent;
       border-color: transparent;
-      color: hsl(210, 22%, 49%);
+      color: hsl(118, 76%, 44%);
       position: absolute;
       top: 1rem;
       right: 1rem;
@@ -51,8 +51,14 @@
     text-transform: capitalize;
     padding-bottom: 0.5rem;
     margin-bottom: 1rem;
-    border-bottom: 1px solid hsl(210, 22%, 49%);
+    border-bottom: 1.5px solid hsl(118, 76%, 44%);
   }
+
+  .sidebar-group__heading a {
+    text-decoration: none;
+    color: inherit;
+  }
+
   .sidebar-group__sublinks a {
     display: block;
     color: hsl(210, 22%, 49%);
@@ -61,10 +67,6 @@
     align-items: center;
     text-decoration: none;
     margin: 0.5rem 0;
-  }
-  .sidebar__sublinks svg {
-    color: hsl(210, 22%, 49%);
-    margin-right: 1rem;
   }
 
   @media screen and (min-width: 800px) {

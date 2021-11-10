@@ -1,8 +1,9 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
-import { useGlobalContext } from "context";
-
 import classNames from "classnames";
+import {Link} from "react-router-dom";
+
+import { useGlobalContext } from "context";
 
 import links from "Data/sublinks";
 
@@ -23,6 +24,16 @@ export default function Sidebar({onModeChange,currentMode}){
     closeSidebar();
   };
 
+  const handleNavLinkClick = (page, modes) => {
+    if (page !== "home") {
+      onModeChange(modes[0].id);
+    }
+    else {
+      onModeChange(null);
+    }
+    closeSidebar();
+  };
+
   return (
     <div
       className={classes}
@@ -36,7 +47,7 @@ export default function Sidebar({onModeChange,currentMode}){
             const { modes, page, id, icon, url } = link;
             return (
               <div className="sidebar-group" key={id}>
-                <h4 className="sidebar-group__heading">{icon}{page}</h4>
+                <h4 className="sidebar-group__heading"><Link onClick={()=>handleNavLinkClick(page, modes)} to={url}>{icon}{page}</Link></h4>
                 <ul className="sidebar-group__sublinks">
                   {modes ? modes.map((mode) => {
                     const {id, name } = mode;
