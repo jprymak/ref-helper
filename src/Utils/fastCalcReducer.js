@@ -4,9 +4,9 @@ import {
     calculateUnitPipePressureDrop,
     calculateVolumetricFlow,
     getMediumParameters
-  } from "../Helpers/index.js";
-import seamPipes from "../Data/pipes";
-import water from "../Data/water";
+  } from "Utils/fluidMechanicsFormulas";
+import seamPipes from "Data/pipes";
+import water from "Data/water";
 
 export const stateReducer = (state, action) => {
 const {temperature} = state;

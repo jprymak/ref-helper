@@ -7,7 +7,7 @@ import { SelectionInfo } from "Components/SelectionInfo";
 import { Input } from "Components/Form/Input";
 
 import { useEffect, useReducer } from "react";
-import { stateReducer } from "Hooks/stateReducer";
+import { stateReducer } from "Utils/fastCalcReducer";
 import getDispatchObj from "Data/dispatchObj";
 import initialState from "Data/initialState";
 
