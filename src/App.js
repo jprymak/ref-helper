@@ -14,14 +14,14 @@ import { Submenu } from "./Components/Submenu";
 import {Sidebar} from "Components/Sidebar";
 
 function App() {
-    const [currentMode, setCurrentMode] = useState(links[1].modes[0]);
+    const [currentMode, setCurrentMode] = useState(links[0].modes[0]);
     const handleModeChange=(mode)=>{
       if(!mode) return;
       const number = mode.split("-")[1];
       const modeGroup = mode.split("-")[0];
       switch(modeGroup){
-        case "calc": setCurrentMode(links[1].modes[number-1]); break;
-        case "projects": setCurrentMode(links[2].modes[number-1]);break;
+        case "calc": setCurrentMode(links[0].modes[number-1]); break;
+        case "projects": setCurrentMode(links[1].modes[number-1]);break;
         default: return;
       }
     };
@@ -37,9 +37,9 @@ function App() {
             <Route path="/ref-helper/projects">
           <Projects {...currentMode}/>
             </Route>
-            <Route path="/ref-helper/">
+            {/* <Route path="/ref-helper/">
           <Home />
-            </Route>
+            </Route> */}
         </Switch>
         <Submenu onModeChange={handleModeChange} currentMode={currentMode}/>
         </Router>
