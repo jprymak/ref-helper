@@ -1,8 +1,13 @@
+
+import { useParams } from "react-router-dom";
 import { useGlobalContext } from "context";
 
-export default function Projects(props){
+import findCurrentModeInLinks from "../../Utils/helpers";
 
-const {closeSubmenu} = useGlobalContext();
-const {name} = props;
-    return <div onMouseOver={closeSubmenu} className="mode"><h1>{name}</h1></div>;
+export default function Projects() {
+    const { mode } = useParams();
+    const { closeSubmenu } = useGlobalContext();
+    const pickedMode = findCurrentModeInLinks(mode);
+
+    return <div onMouseOver={closeSubmenu} className="mode"><h1>{pickedMode.name}</h1></div>;
 }

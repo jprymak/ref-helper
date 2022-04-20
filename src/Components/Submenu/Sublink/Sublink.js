@@ -1,16 +1,16 @@
 import classNames from "classnames";
 
-import {Link} from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-function Sublink({active, handleSublinkClick, id, name, url}) {
+function Sublink({ handleSublinkClick, name, url }) {
+    const location = useLocation();
     const classes = classNames({
-        "sublinks__sublink":true,
-        "sublinks__sublink--active": active
+        "sublinks__sublink": true,
+        "sublinks__sublink--active": location.pathname.includes(url)
     });
     return (
         <li className={classes}>
-            <Link 
-        onClick={() => handleSublinkClick(id)} to={url}>{name}</Link>
+            <Link onClick={handleSublinkClick} to={url}>{name}</Link>
         </li>
     );
 }

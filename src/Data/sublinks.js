@@ -12,43 +12,48 @@ const links = [
     id: 1,
     page: "fast calc",
     url: "/ref-helper/fast-calc",
-    icon:  <FaCalculator className="navbar__icon"/>,
-    modes: [
-        {
-            id: "calc-1",
-            name: "Select Pipe By Flow",
-            info: ["pipe","velocity","pressureDrop"],
-            inputs: ["flow","allowedPressureDrop","allowedVelocity"],
-        },
-        {
-            id: "calc-2",
-            name: "Select Pipe By Capacity",
-            info: ["pipe","flow","velocity","pressureDrop"],
-            inputs: ["capacity","delta","allowedPressureDrop","allowedVelocity"]
-        },
-        {
-            id: "calc-3",
-            name: "Calculate flow",
-            info: ["flow"],
-            inputs: ["capacity","delta"]
-        }
-    ],
+    icon: <FaCalculator className="navbar__icon" />,
+    modes: {
+      "calc-1": {
+        id: "calc-1",
+        url: "/ref-helper/fast-calc/calc-1",
+        name: "Select Pipe By Capacity",
+        info: ["pipe", "flow", "velocity", "pressureDrop"],
+        inputs: ["capacity", "delta", "allowedPressureDrop", "allowedVelocity"]
+      },
+      "calc-2": {
+        id: "calc-2",
+        url: "/ref-helper/fast-calc/calc-2",
+        name: "Select Pipe By Flow",
+        info: ["pipe", "velocity", "pressureDrop"],
+        inputs: ["flow", "allowedPressureDrop", "allowedVelocity"],
+      },
+      "calc-3": {
+        id: "calc-3",
+        url: "/ref-helper/fast-calc/calc-3",
+        name: "Calculate flow",
+        info: ["flow"],
+        inputs: ["capacity", "delta"]
+      }
+    },
   },
   {
     id: 2,
     page: "projects",
     url: "/ref-helper/projects",
-    icon:  <FaFolder className="navbar__icon"/>,
-    modes: [
-      {
+    icon: <FaFolder className="navbar__icon" />,
+    modes: {
+      "projects-1": {
         id: "projects-1",
         name: "New project",
-    },
-    {
+        url: "/ref-helper/projects/projects-1",
+      },
+      "projects-2": {
         id: "projects-2",
         name: "Browse Projects",
+        url: "/ref-helper/projects/projects-2",
+      },
     },
-    ],
   },
 ];
 

@@ -7,7 +7,7 @@ import { NavLink } from "Components/NavBar/NavLink";
 
 import "./index.scss";
 
-export default function NavBar({ onModeChange }) {
+export default function NavBar() {
 
   const { openSubmenu, closeSubmenu, openSidebar } = useGlobalContext();
 
@@ -26,14 +26,6 @@ export default function NavBar({ onModeChange }) {
     }
   };
 
-  const handleNavLinkClick = (page, modes) => {
-    if (page !== "home") {
-      onModeChange(modes[0].id);
-    }
-    else {
-      onModeChange(null);
-    }
-  };
   return (
     <nav className="navbar" onMouseOver={handleSubmenu}>
       <button className='navbar__button' onClick={openSidebar}>
@@ -41,7 +33,7 @@ export default function NavBar({ onModeChange }) {
       </button>
       <ul className="navbar__list">
         {
-          links.map(link => <NavLink key={link.id} data={link} displaySubmenu={displaySubmenu} handleNavLinkClick={handleNavLinkClick} />)
+          links.map(link => <NavLink key={link.id} data={link} displaySubmenu={displaySubmenu} />)
         }
       </ul>
     </nav>

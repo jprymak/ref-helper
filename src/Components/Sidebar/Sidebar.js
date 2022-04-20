@@ -1,7 +1,6 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
 import classNames from "classnames";
-import {Link} from "react-router-dom";
 
 import { useGlobalContext } from "context";
 
@@ -11,7 +10,7 @@ import {Sublink} from "./Sublink";
 
 import "./index.scss";
 
-export default function Sidebar({onModeChange,currentMode}){
+export default function Sidebar(){
   const { isSidebarOpen, closeSidebar} = useGlobalContext();
 
   const classes=classNames({
@@ -19,18 +18,7 @@ export default function Sidebar({onModeChange,currentMode}){
     "sidebar-wrapper--show": isSidebarOpen
   });
 
-  const handleSublinkClick = (id) =>{
-    onModeChange(id);
-    closeSidebar();
-  };
-
-  const handleNavLinkClick = (page, modes) => {
-    if (page !== "home") {
-      onModeChange(modes[0].id);
-    }
-    else {
-      onModeChange(null);
-    }
+  const handleSublinkClick = () =>{
     closeSidebar();
   };
 
@@ -44,15 +32,15 @@ export default function Sidebar({onModeChange,currentMode}){
         </button>
         <div className="sidebar-groups">
           {links.map(link=> {
-            const { modes, page, id, icon, url } = link;
+            const { modes, page, id, icon } = link;
             return (
               <div className="sidebar-group" key={id}>
-                <h4 className="sidebar-group__heading"><Link onClick={()=>handleNavLinkClick(page, modes)} to={url}>{icon}{page}</Link></h4>
+                <h4 className="sidebar-group__heading">{icon}{page}</h4>
                 <ul className="sidebar-group__sublinks">
-                  {modes ? modes.map((mode) => {
-                    const {id, name } = mode;
+                  {modes ? Object.keys(modes)?.map((mode) => {
+                    const {id, name, url } = modes[mode];
                     return (
-                      <Sublink key={id} active={currentMode.id===id} handleSublinkClick={handleSublinkClick} name={name} id={id} url={url}/>
+                      <Sublink key={id} handleSublinkClick={handleSublinkClick} name={name} url={url}/>
                     );
                   }) : null}
                 </ul>

@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 
 import {
   BrowserRouter as Router,
@@ -8,40 +7,28 @@ import {
 } from "react-router-dom";
 
 import {NavBar} from "./Components/NavBar";
-import links from "./Data/sublinks";
 import {Home, FastCalc, Projects} from "./Pages";
 import { Submenu } from "./Components/Submenu";
 import {Sidebar} from "Components/Sidebar";
 
 function App() {
-    const [currentMode, setCurrentMode] = useState(links[0].modes[0]);
-    const handleModeChange=(mode)=>{
-      if(!mode) return;
-      const number = mode.split("-")[1];
-      const modeGroup = mode.split("-")[0];
-      switch(modeGroup){
-        case "calc": setCurrentMode(links[0].modes[number-1]); break;
-        case "projects": setCurrentMode(links[1].modes[number-1]);break;
-        default: return;
-      }
-    };
     return (
       <>
       <Router>
-        <NavBar onModeChange={handleModeChange}/>
-        <Sidebar onModeChange={handleModeChange} currentMode={currentMode}/>
+        <NavBar/>
+        <Sidebar/>
         <Switch>
-          <Route path="/ref-helper/fast-calc">
-          <FastCalc {...currentMode}/>
+          <Route path="/ref-helper/fast-calc/:mode">
+          <FastCalc/>
             </Route>
-            <Route path="/ref-helper/projects">
-          <Projects {...currentMode}/>
+            <Route path="/ref-helper/projects/:mode">
+          <Projects/>
             </Route>
             {/* <Route path="/ref-helper/">
           <Home />
             </Route> */}
         </Switch>
-        <Submenu onModeChange={handleModeChange} currentMode={currentMode}/>
+        <Submenu/>
         </Router>
       </>
     );

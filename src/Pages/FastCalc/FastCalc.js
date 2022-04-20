@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 import { useGlobalContext } from "context";
 
@@ -11,9 +12,16 @@ import { stateReducer } from "Utils/fastCalcReducer";
 import getDispatchObj from "Data/dispatchObj";
 import initialState from "Data/initialState";
 
-export default function FastCalc({ info, inputs }) {
+import findCurrentModeInLinks from "../../Utils/helpers";
+
+export default function FastCalc() {
   const { closeSubmenu } = useGlobalContext();
   const [state, dispatch] = useReducer(stateReducer, initialState);
+  const { mode } = useParams();
+  
+  const pickedMode = findCurrentModeInLinks(mode);
+  const inputs = pickedMode.inputs;
+  const info = pickedMode.info;
 
   useEffect(() => {
     dispatch({ type: "setStateToInitial", payload: initialState });
