@@ -24,9 +24,9 @@ function App() {
             <Route path="/ref-helper/projects/:mode">
           <Projects/>
             </Route>
-            {/* <Route path="/ref-helper/">
+            <Route path="/ref-helper/">
           <Home />
-            </Route> */}
+            </Route>
         </Switch>
         <Submenu/>
         </Router>
