@@ -6,6 +6,7 @@ import { useGlobalContext } from "context";
 import { Form } from "Components/Form";
 import { SelectionInfo } from "Components/SelectionInfo";
 import { Input } from "Components/Form/Input";
+import { Select } from "Components/Form/Select";
 
 import { useEffect, useReducer } from "react";
 import { stateReducer } from "Utils/fastCalcReducer";
@@ -13,20 +14,24 @@ import getDispatchObj from "Data/dispatchObj";
 import initialState from "Data/initialState";
 
 import findCurrentModeInLinks from "../../Utils/helpers";
+import * as propyleneGlycol from "../../Data/propyleneGlycol";
+import * as ethyleneGlycol from "../../Data/ethyleneGlycol";
+import {water} from "../../Data/water";
+
+const media = {...propyleneGlycol, ...ethyleneGlycol, water};
 
 export default function FastCalc() {
   const { closeSubmenu } = useGlobalContext();
   const [state, dispatch] = useReducer(stateReducer, initialState);
   const { mode } = useParams();
-  
+
+  useEffect(() => {
+    dispatch({ type: "initialCalc" });
+  }, [mode]);
+
   const pickedMode = findCurrentModeInLinks(mode);
   const inputs = pickedMode.inputs;
   const info = pickedMode.info;
-
-  useEffect(() => {
-    dispatch({ type: "setStateToInitial", payload: initialState });
-    dispatch({ type: "setPipe" });
-  }, [info, inputs]);
 
   const convertArrayToObject = (array, source) => {
     return array.reduce((obj, item) => {
@@ -38,13 +43,14 @@ export default function FastCalc() {
   };
 
   const handleInputChange = (e) => {
-    dispatch(getDispatchObj(e));
+    dispatch(getDispatchObj(e, mode));
   };
 
   const convertedInputs = convertArrayToObject(inputs, state);
   const convertedInfo = convertArrayToObject(info, state);
 
   const inputRenderSwitch = (key) => {
+
     switch (key) {
       case "flow":
         return (
@@ -120,6 +126,20 @@ export default function FastCalc() {
             unit="kW"
           />
         );
+
+        case "medium":
+        return (
+          <Select
+            key={key}
+            name="medium-select"
+            label="Medium"
+            onInputChange={handleInputChange}
+            options={Object.keys(media)}
+            value={convertedInputs[key]}
+            unit="-"
+          />
+        );
+
       default:
         return null;
     }
