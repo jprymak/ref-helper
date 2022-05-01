@@ -134,10 +134,25 @@ export default function FastCalc() {
             name="medium-select"
             label="Medium"
             onInputChange={handleInputChange}
-            options={Object.keys(media)}
             value={convertedInputs[key]}
             unit="-"
-          />
+          >
+            {Object.keys(media).map((option, index)=><option key={index} value={option} label={media[option].name}></option>)}
+          </Select>
+        );
+
+        case "temperature":
+        return (
+          <Select
+            key={key}
+            name="temperature-select"
+            label="Temperature"
+            onInputChange={handleInputChange}
+            value={convertedInputs[key]}
+            unit="°C"
+          >
+            {Object.keys(media[state.medium].parameters).sort((a,b)=>a-b).map((option, index)=><option key={index} value={option} label={option}></option>)}
+          </Select>
         );
 
       default:

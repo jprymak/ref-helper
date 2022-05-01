@@ -8,7 +8,7 @@ const initialState = {
   allowedVelocity: 2,
   pipe: null,
   delta: 4,
-  medium: "water"
+  medium: "water",
 };
 
 export default initialState;

@@ -1,6 +1,6 @@
 
 export function calculateVolumetricFlow(capacity, delta, density, specificHeat) {
-    return (capacity / delta / density / specificHeat * 3600).toFixed(1); /* l/s */
+    return (capacity / delta / density / specificHeat * 3600).toFixed(2); /* l/s */
 }
 
 export function calculateVelocity(volumetricFlow, innerDiameter) {
