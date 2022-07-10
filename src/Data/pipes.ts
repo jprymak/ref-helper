@@ -1,4 +1,9 @@
-const seamPipes = {
+
+export interface PipesObject {
+        [key: string]: { externalDiameter: number, wallThickness: number, innerDiameter: number }
+}
+
+const seamPipes: PipesObject = {
     "15": { externalDiameter: 21.3, wallThickness: 2, innerDiameter: 17.3 },
     "20": { externalDiameter: 26.9, wallThickness: 2, innerDiameter: 22.9 },
     "25": { externalDiameter: 33.7, wallThickness: 2, innerDiameter: 29.7 },

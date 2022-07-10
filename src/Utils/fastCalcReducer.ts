@@ -7,13 +7,43 @@ import {
     calculateDynamicViscosity
 } from "Utils/fluidMechanicsFormulas";
 import seamPipes from "Data/pipes";
-import * as propyleneGlycol from "../Data/propyleneGlycol";
-import * as ethyleneGlycol from "../Data/ethyleneGlycol";
-import { water } from "../Data/water";
 
-const media = { ...propyleneGlycol, ...ethyleneGlycol, water };
+import * as fluids from "../Data/fluids";
+import {FluidType} from "../Data/fluids";
 
-export const stateReducer = (state, action) => {
+interface IFluidsLibrary {
+    [key: string]: FluidType
+}
+
+const media:IFluidsLibrary = {...fluids};
+
+export type FastCalcAction = {type: "initialCalc"} |
+    {type: "setCapacity", payload: number} |
+    {type: "setDelta", payload: number} |
+    {type: "setFlow", payload: number} |
+    {type: "setAllowedVelocity", payload: number} |
+    {type: "setAllowedPressureDrop", payload: number} |
+    {type: "setMedium", payload: string, mode: string} |
+    {type: "setTemperature", payload: string, mode: string}
+
+export interface FastCalcState {
+    [key: string]: any;
+    capacity: number,
+    temperature: string,
+    flow: number,
+    velocity: null | number,
+    pressureDrop: null | number,
+    allowedPressureDrop: number,
+    allowedVelocity: number,
+    pipe: null | string,
+    delta: number,
+    medium: string,
+    dynamicViscosity: number,
+    density: number,
+    specificHeat: number
+}
+
+export const stateReducer = (state: FastCalcState, action: FastCalcAction):FastCalcState => {
 
     switch (action.type) {
 
@@ -34,9 +64,9 @@ export const stateReducer = (state, action) => {
                 state.allowedPressureDrop,
                 state.allowedVelocity
             );
-
+            if (selectedPipe === undefined) return { ...state, flow: 0, pipe: "", velocity: 0, pressureDrop: 0 };
             const velocity = calculateVelocity(flow, seamPipes[selectedPipe].innerDiameter / 1000);
-            const unitPressureDrop = calculateUnitPipePressureDrop(
+            const unitPressureDrop = +calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
                 density,
                 velocity,
@@ -47,7 +77,7 @@ export const stateReducer = (state, action) => {
         }
 
         case "setFlow": {
-            const flow = action.flow > 1000 ? 1000 : action.flow;
+            const flow = action.payload > 1000 ? 1000 : action.payload;
 
             const selectedPipe = selectPipe(
                 seamPipes,
@@ -57,9 +87,9 @@ export const stateReducer = (state, action) => {
                 state.allowedPressureDrop,
                 state.allowedVelocity
             );
-            if (selectedPipe === undefined) return { ...state, flow, pipe: "", velocity: "", pressureDrop: "" };
+            if (selectedPipe === undefined) return { ...state, flow, pipe: "", velocity: 0, pressureDrop: 0 };
             const velocity = calculateVelocity(flow, seamPipes[selectedPipe].innerDiameter / 1000);
-            const unitPressureDrop = calculateUnitPipePressureDrop(
+            const unitPressureDrop = +calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
                 state.density,
                 velocity,
@@ -69,7 +99,7 @@ export const stateReducer = (state, action) => {
             return { ...state, flow, pipe: selectedPipe, velocity, pressureDrop: unitPressureDrop };
         }
         case "setCapacity": {
-            const capacity = action.capacity > 10000 ? 10000 : action.capacity;
+            const capacity = action.payload > 10000 ? 10000 : action.payload;
             const flow = calculateVolumetricFlow(capacity, state.delta, state.density, state.specificHeat);
             const selectedPipe = selectPipe(
                 seamPipes,
@@ -79,9 +109,9 @@ export const stateReducer = (state, action) => {
                 state.allowedPressureDrop,
                 state.allowedVelocity
             );
-            if (selectedPipe === undefined) return { ...state, flow: "", pipe: "", velocity: "", pressureDrop: "", capacity };
+            if (selectedPipe === undefined) return { ...state, flow: 0, pipe: "", velocity: 0, pressureDrop: 0, capacity };
             const velocity = calculateVelocity(flow, seamPipes[selectedPipe].innerDiameter / 1000);
-            const unitPressureDrop = calculateUnitPipePressureDrop(
+            const unitPressureDrop = +calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
                 state.density,
                 velocity,
@@ -92,7 +122,7 @@ export const stateReducer = (state, action) => {
         }
 
         case "setDelta": {
-            const delta = action.delta >= 50 ? 50 : action.delta;
+            const delta = action.payload >= 50 ? 50 : action.payload;
             const flow = calculateVolumetricFlow(state.capacity, delta, state.density, state.specificHeat);
 
             const selectedPipe = selectPipe(
@@ -103,9 +133,9 @@ export const stateReducer = (state, action) => {
                 state.allowedPressureDrop,
                 state.allowedVelocity
             );
-            if (selectedPipe === undefined) return { ...state, flow: "", pipe: "", velocity: "", pressureDrop: "", delta };
+            if (selectedPipe === undefined) return { ...state, flow: 0, pipe: "", velocity: 0, pressureDrop: 0, delta };
             const velocity = calculateVelocity(flow, seamPipes[selectedPipe].innerDiameter / 1000);
-            const unitPressureDrop = calculateUnitPipePressureDrop(
+            const unitPressureDrop = +calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
                 state.density,
                 velocity,
@@ -123,19 +153,19 @@ export const stateReducer = (state, action) => {
                 state.flow,
                 state.dynamicViscosity,
                 state.density,
-                action.allowedPressureDrop,
+                action.payload,
                 state.allowedVelocity
             );
-            if (selectedPipe === undefined) return { ...state, pipe: "", velocity: "", pressureDrop: "", allowedPressureDrop: action.allowedPressureDrop };
+            if (selectedPipe === undefined) return { ...state, pipe: "", velocity: 0, pressureDrop: 0, allowedPressureDrop: action.payload };
             const velocity = calculateVelocity(state.flow, seamPipes[selectedPipe].innerDiameter / 1000);
-            const unitPressureDrop = calculateUnitPipePressureDrop(
+            const unitPressureDrop = +calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
                 state.density,
                 velocity,
                 state.dynamicViscosity
             ).toFixed(0);
 
-            return { ...state, pipe: selectedPipe, allowedPressureDrop: action.allowedPressureDrop, velocity, pressureDrop: unitPressureDrop };
+            return { ...state, pipe: selectedPipe, allowedPressureDrop: action.payload, velocity, pressureDrop: unitPressureDrop };
         }
         case "setAllowedVelocity": {
 
@@ -145,26 +175,28 @@ export const stateReducer = (state, action) => {
                 state.dynamicViscosity,
                 state.density,
                 state.allowedPressureDrop,
-                action.allowedVelocity
+                action.payload
             );
-            if (selectedPipe === undefined) return { ...state, pipe: "", velocity: "", pressureDrop: "", allowedVelocity: action.allowedVelocity };
+            if (selectedPipe === undefined) return { ...state, pipe: "", velocity: 0, pressureDrop: 0, allowedVelocity: action.payload };
             const velocity = calculateVelocity(state.flow, seamPipes[selectedPipe].innerDiameter / 1000);
-            const unitPressureDrop = calculateUnitPipePressureDrop(
+            const unitPressureDrop = +calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
                 state.density,
                 velocity,
                 state.dynamicViscosity
             ).toFixed(0);
 
-            return { ...state, pipe: selectedPipe, allowedVelocity: action.allowedVelocity, velocity, pressureDrop: unitPressureDrop };
+            return { ...state, pipe: selectedPipe, allowedVelocity: action.payload, velocity, pressureDrop: unitPressureDrop };
         }
         case "setMedium": {
-            const temperature = media[action.medium].parameters[state.temperature] ? state.temperature : 20;
-            let mediumParameters = getMediumParameters(media[action.medium].parameters, temperature);
+
+            const temperature = media[action.payload].parameters[state.temperature] ? state.temperature : "20";
+
+            let mediumParameters = getMediumParameters(media[action.payload].parameters, temperature);
 
             const specificHeat = mediumParameters.specificHeat;
             const density = mediumParameters.density;
-            const flow = action.mode==="calc-2" ? state.flow : calculateVolumetricFlow(state.capacity, state.delta, density, specificHeat);
+            const flow = action.mode === "calc-2" ? state.flow : calculateVolumetricFlow(state.capacity, state.delta, density, specificHeat);
 
             let dynamicViscosity = calculateDynamicViscosity(mediumParameters.viscosity, density);
 
@@ -176,25 +208,25 @@ export const stateReducer = (state, action) => {
                 state.allowedPressureDrop,
                 state.allowedVelocity
             );
-            if (selectedPipe === undefined) return { ...state, pipe: "", velocity: "", pressureDrop: "", medium: action.medium };
+            if (selectedPipe === undefined) return { ...state, pipe: "", velocity: 0, pressureDrop: 0, medium: action.payload };
             const velocity = calculateVelocity(flow, seamPipes[selectedPipe].innerDiameter / 1000);
-            const unitPressureDrop = calculateUnitPipePressureDrop(
+            const unitPressureDrop = +calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
                 density,
                 velocity,
                 state.dynamicViscosity
             ).toFixed(0);
 
-            return { ...state, pipe: selectedPipe, flow, medium: action.medium, velocity, pressureDrop: unitPressureDrop, temperature };
+            return { ...state, pipe: selectedPipe, flow, medium: action.payload, velocity, pressureDrop: unitPressureDrop, temperature };
         }
 
         case "setTemperature": {
-            const temperature = action.temperature;
+            const temperature = action.payload;
             let mediumParameters = getMediumParameters(media[state.medium].parameters, temperature);
 
             const specificHeat = mediumParameters.specificHeat;
             const density = mediumParameters.density;
-            const flow = action.mode==="calc-2" ? state.flow : calculateVolumetricFlow(state.capacity, state.delta, density, specificHeat);
+            const flow = action.mode === "calc-2" ? state.flow : calculateVolumetricFlow(state.capacity, state.delta, density, specificHeat);
 
             let dynamicViscosity = calculateDynamicViscosity(mediumParameters.viscosity, density);
 
@@ -206,9 +238,9 @@ export const stateReducer = (state, action) => {
                 state.allowedPressureDrop,
                 state.allowedVelocity
             );
-            if (selectedPipe === undefined) return { ...state, pipe: "", velocity: "", pressureDrop: "", medium: action.medium };
+            if (selectedPipe === undefined) return { ...state, pipe: "", velocity: 0, pressureDrop: 0 };
             const velocity = calculateVelocity(flow, seamPipes[selectedPipe].innerDiameter / 1000);
-            const unitPressureDrop = calculateUnitPipePressureDrop(
+            const unitPressureDrop = +calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
                 density,
                 velocity,

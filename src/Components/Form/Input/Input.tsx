@@ -2,7 +2,20 @@ import React from "react";
 
 import "./index.scss";
 
-function Input({name, label, onInputChange, type, min, max, value, unit, step}) {
+interface IProps{
+    name: string;
+    label: string;
+    onInputChange: (e: React.ChangeEvent<HTMLInputElement>)=>void;
+    type: string;
+    min?: number;
+    max?: number;
+    value: string;
+    unit: string;
+    step?: string;
+}
+
+
+function Input({name, label, onInputChange, type, min, max, value, unit, step}: IProps) {
     return (
         <>
             <label htmlFor={name}>{label}:</label>
