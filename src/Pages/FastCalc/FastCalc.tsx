@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useEffect, useReducer } from "react";
+import { pick } from "lodash";
 
 import { useGlobalContext } from "context";
 
@@ -9,25 +10,30 @@ import { SelectionInfo } from "Components/SelectionInfo";
 import { Input } from "Components/Form/Input";
 import { Select } from "Components/Form/Select";
 
-
-
-import { stateReducer, FastCalcState, FastCalcAction } from "Utils/fastCalcReducer";
+import {
+  stateReducer,
+} from "Utils/fastCalcReducer";
 
 import getAction from "Data/getAction";
 import initialState from "Data/initialState";
 
 import findCurrentModeInLinks from "../../Utils/helpers";
+import { Mode } from "../../Data/sublinks";
 
 import * as fluids from "Data/fluids";
 import { FluidType } from "Data/fluids";
 
 interface IFluidsLibrary {
-  [key: string]: FluidType
+  [key: string]: FluidType;
+}
+
+interface IRenderedItems {
+  [key: string]: string | number;
 }
 
 const media: IFluidsLibrary = { ...fluids };
 
-export default function FastCalc(): JSX.Element {
+export default function FastCalc(): JSX.Element | null {
   const { closeSubmenu } = useGlobalContext();
   const [state, dispatch] = useReducer(stateReducer, initialState);
   const { mode } = useParams<{ mode: string }>();
@@ -36,25 +42,23 @@ export default function FastCalc(): JSX.Element {
     dispatch({ type: "initialCalc" });
   }, [mode]);
 
-  const pickedMode = findCurrentModeInLinks(mode);
-  const inputs = pickedMode.inputs;
-  const info = pickedMode.info;
+  const pickedMode: Mode | undefined = findCurrentModeInLinks(mode);
 
-  const mapKeysToObject = function (array: string[], source: { [key: string]: string }){
-    const obj: { [key: string]: string } = {};
-    array.forEach(key => obj[key] = source[key]);
-    return obj;
-  };
+  if (!pickedMode || pickedMode.inputs === undefined || pickedMode.info === undefined) return null;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+  const inputs: string[] = pickedMode.inputs;
+  const inputsToRender: IRenderedItems = pick(state, pickedMode.inputs);
+  const infoToRender: IRenderedItems = pick(state, pickedMode.info);
+
+  const handleInputChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
     dispatch(getAction(e, mode));
   };
 
-  const inputsToRender = mapKeysToObject(inputs, state);
-  const infoToRender = mapKeysToObject(info, state);
-
   const inputRenderSwitch = (key: string) => {
-
     switch (key) {
       case "flow":
         return (
@@ -141,7 +145,13 @@ export default function FastCalc(): JSX.Element {
             value={inputsToRender[key]}
             unit="-"
           >
-            {Object.keys(media).map((option, index) => <option key={index} value={option} label={media[option].name}></option>)}
+            {Object.keys(media).map((option, index) => (
+              <option
+                key={index}
+                value={option}
+                label={media[option].name}
+              ></option>
+            ))}
           </Select>
         );
 
@@ -155,7 +165,11 @@ export default function FastCalc(): JSX.Element {
             value={inputsToRender[key]}
             unit="°C"
           >
-            {Object.keys(media[state.medium].parameters).sort((a, b) => Number(a) - Number(b)).map((option, index) => <option key={index} value={option} label={option}></option>)}
+            {Object.keys(media[state.medium].parameters)
+              .sort((a, b) => Number(a) - Number(b))
+              .map((option, index) => (
+                <option key={index} value={option} label={option}></option>
+              ))}
           </Select>
         );
 

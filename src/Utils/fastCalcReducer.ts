@@ -26,16 +26,18 @@ export type FastCalcAction = {type: "initialCalc"} |
     {type: "setMedium", payload: string, mode: string} |
     {type: "setTemperature", payload: string, mode: string}
 
+
+
 export interface FastCalcState {
-    [key: string]: any;
+    [key: string]: string | number;
     capacity: number,
     temperature: string,
     flow: number,
-    velocity: null | number,
-    pressureDrop: null | number,
+    velocity: number,
+    pressureDrop: number,
     allowedPressureDrop: number,
     allowedVelocity: number,
-    pipe: null | string,
+    pipe: string,
     delta: number,
     medium: string,
     dynamicViscosity: number,

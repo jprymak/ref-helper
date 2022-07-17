@@ -11,7 +11,7 @@ import {Home, FastCalc, Projects} from "./Pages";
 import { Submenu } from "./Components/Submenu";
 import {Sidebar} from "Components/Sidebar";
 
-function App() {
+function App():JSX.Element {
     return (
       <>
       <Router>

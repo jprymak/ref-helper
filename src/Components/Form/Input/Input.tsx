@@ -9,7 +9,7 @@ interface IProps{
     type: string;
     min?: number;
     max?: number;
-    value: string;
+    value: string | number;
     unit: string;
     step?: string;
 }

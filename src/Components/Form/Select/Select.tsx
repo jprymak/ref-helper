@@ -8,7 +8,7 @@ interface IProps{
     name: string;
     label: string;
     onInputChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-    value: string;
+    value: string | number;
     unit: string;
 }
 
