@@ -1,6 +1,8 @@
 
 import React from "react";
 
+
+
 import "./index.scss";
 
 interface IProps{
@@ -13,10 +15,11 @@ interface IProps{
 }
 
 function Select({ children, label, unit, name, onInputChange, value }: IProps){
+    
     return (
         <>
         <label htmlFor={ name }> { label } </label>
-        <select name={name} onChange={onInputChange} value={value}>
+        <select className="select" name={name} onChange={onInputChange} value={value}>
             {children}
             </select>
             <span>{unit}</span>

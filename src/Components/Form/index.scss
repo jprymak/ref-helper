@@ -16,3 +16,15 @@
     row-gap: 2rem;
 }
 
+.input-value{
+  color: #73e8ae;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 750px){
+  .form-wrapper{
+    padding:1rem;
+    margin-bottom: 2rem;
+  }
+}
+

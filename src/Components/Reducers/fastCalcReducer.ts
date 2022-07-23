@@ -4,12 +4,12 @@ import {
     calculateUnitPipePressureDrop,
     calculateVolumetricFlow,
     getMediumParameters,
-    calculateDynamicViscosity
+    calculateDynamicViscosity,
 } from "Utils/fluidMechanicsFormulas";
 import seamPipes from "Data/pipes";
 
-import * as fluids from "../Data/fluids";
-import {FluidType} from "../Data/fluids";
+import * as fluids from "../../Data/fluids";
+import {FluidType} from "../../Data/fluids";
 
 interface IFluidsLibrary {
     [key: string]: FluidType
@@ -18,9 +18,9 @@ interface IFluidsLibrary {
 const media:IFluidsLibrary = {...fluids};
 
 export type FastCalcAction = {type: "initialCalc"} |
-    {type: "setCapacity", payload: number} |
-    {type: "setDelta", payload: number} |
-    {type: "setFlow", payload: number} |
+    {type: "setCapacity", payload: string} |
+    {type: "setDelta", payload: string} |
+    {type: "setFlow", payload: string} |
     {type: "setAllowedVelocity", payload: number} |
     {type: "setAllowedPressureDrop", payload: number} |
     {type: "setMedium", payload: string, mode: string} |
@@ -30,19 +30,19 @@ export type FastCalcAction = {type: "initialCalc"} |
 
 export interface FastCalcState {
     [key: string]: string | number;
-    capacity: number,
+    capacity: string,
     temperature: string,
-    flow: number,
+    flow: string,
     velocity: number,
     pressureDrop: number,
     allowedPressureDrop: number,
     allowedVelocity: number,
     pipe: string,
-    delta: number,
+    delta: string,
     medium: string,
     dynamicViscosity: number,
     density: number,
-    specificHeat: number
+    specificHeat: number,
 }
 
 export const stateReducer = (state: FastCalcState, action: FastCalcAction):FastCalcState => {
@@ -56,7 +56,7 @@ export const stateReducer = (state: FastCalcState, action: FastCalcAction):FastC
             const density = mediumParameters.density;
             const dynamicViscosity = calculateDynamicViscosity(mediumParameters.viscosity, density);
             const specificHeat = media[state.medium].parameters[temperature].specificHeat;
-            const flow = calculateVolumetricFlow(state.capacity, state.delta, density, specificHeat);
+            const flow = calculateVolumetricFlow(state.capacity, state.delta, density, specificHeat).toString();
 
             const selectedPipe = selectPipe(
                 seamPipes,
@@ -66,7 +66,7 @@ export const stateReducer = (state: FastCalcState, action: FastCalcAction):FastC
                 state.allowedPressureDrop,
                 state.allowedVelocity
             );
-            if (selectedPipe === undefined) return { ...state, flow: 0, pipe: "", velocity: 0, pressureDrop: 0 };
+            if (selectedPipe === undefined) return { ...state, flow: "", pipe: "", velocity: 0, pressureDrop: 0 };
             const velocity = calculateVelocity(flow, seamPipes[selectedPipe].innerDiameter / 1000);
             const unitPressureDrop = +calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
@@ -79,7 +79,7 @@ export const stateReducer = (state: FastCalcState, action: FastCalcAction):FastC
         }
 
         case "setFlow": {
-            const flow = action.payload > 1000 ? 1000 : action.payload;
+            const flow = Number(action.payload) > 1000 ? "1000" : action.payload;
 
             const selectedPipe = selectPipe(
                 seamPipes,
@@ -101,8 +101,8 @@ export const stateReducer = (state: FastCalcState, action: FastCalcAction):FastC
             return { ...state, flow, pipe: selectedPipe, velocity, pressureDrop: unitPressureDrop };
         }
         case "setCapacity": {
-            const capacity = action.payload > 10000 ? 10000 : action.payload;
-            const flow = calculateVolumetricFlow(capacity, state.delta, state.density, state.specificHeat);
+            const capacity = +action.payload > 10000 ? "10000" : action.payload;
+            const flow = calculateVolumetricFlow(capacity, state.delta, state.density, state.specificHeat).toString();
             const selectedPipe = selectPipe(
                 seamPipes,
                 flow,
@@ -111,7 +111,7 @@ export const stateReducer = (state: FastCalcState, action: FastCalcAction):FastC
                 state.allowedPressureDrop,
                 state.allowedVelocity
             );
-            if (selectedPipe === undefined) return { ...state, flow: 0, pipe: "", velocity: 0, pressureDrop: 0, capacity };
+            if (selectedPipe === undefined) return { ...state, flow: "0", pipe: "", velocity: 0, pressureDrop: 0, capacity };
             const velocity = calculateVelocity(flow, seamPipes[selectedPipe].innerDiameter / 1000);
             const unitPressureDrop = +calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
@@ -124,8 +124,8 @@ export const stateReducer = (state: FastCalcState, action: FastCalcAction):FastC
         }
 
         case "setDelta": {
-            const delta = action.payload >= 50 ? 50 : action.payload;
-            const flow = calculateVolumetricFlow(state.capacity, delta, state.density, state.specificHeat);
+            const delta = +action.payload >= 50 ? "50" : action.payload;
+            const flow = calculateVolumetricFlow(state.capacity, delta, state.density, state.specificHeat).toString();;
 
             const selectedPipe = selectPipe(
                 seamPipes,
@@ -135,7 +135,7 @@ export const stateReducer = (state: FastCalcState, action: FastCalcAction):FastC
                 state.allowedPressureDrop,
                 state.allowedVelocity
             );
-            if (selectedPipe === undefined) return { ...state, flow: 0, pipe: "", velocity: 0, pressureDrop: 0, delta };
+            if (selectedPipe === undefined) return { ...state, flow: "0", pipe: "", velocity: 0, pressureDrop: 0, delta };
             const velocity = calculateVelocity(flow, seamPipes[selectedPipe].innerDiameter / 1000);
             const unitPressureDrop = +calculateUnitPipePressureDrop(
                 seamPipes[selectedPipe].innerDiameter / 1000,
@@ -198,7 +198,7 @@ export const stateReducer = (state: FastCalcState, action: FastCalcAction):FastC
 
             const specificHeat = mediumParameters.specificHeat;
             const density = mediumParameters.density;
-            const flow = action.mode === "calc-2" ? state.flow : calculateVolumetricFlow(state.capacity, state.delta, density, specificHeat);
+            const flow = action.mode === "calc-2" ? state.flow : calculateVolumetricFlow(state.capacity, state.delta, density, specificHeat).toString();;
 
             let dynamicViscosity = calculateDynamicViscosity(mediumParameters.viscosity, density);
 
@@ -228,7 +228,7 @@ export const stateReducer = (state: FastCalcState, action: FastCalcAction):FastC
 
             const specificHeat = mediumParameters.specificHeat;
             const density = mediumParameters.density;
-            const flow = action.mode === "calc-2" ? state.flow : calculateVolumetricFlow(state.capacity, state.delta, density, specificHeat);
+            const flow = action.mode === "calc-2" ? state.flow : calculateVolumetricFlow(state.capacity, state.delta, density, specificHeat).toString();;
 
             let dynamicViscosity = calculateDynamicViscosity(mediumParameters.viscosity, density);
 

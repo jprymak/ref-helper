@@ -1,4 +1,4 @@
-import { FastCalcState } from "Utils/fastCalcReducer";
+import { FastCalcState } from "Components/Reducers/fastCalcReducer";
 
 const initialState:FastCalcState = {
   capacity: 100,
@@ -13,7 +13,7 @@ const initialState:FastCalcState = {
   medium: "water",
   dynamicViscosity: 0,
   density: 0,
-  specificHeat: 0
+  specificHeat: 0,
 };
 
 export default initialState;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useEffect, useReducer } from "react";
-import { pick } from "lodash";
+import { useEffect, useReducer, useState } from "react";
+import { pick, truncate } from "lodash";
 
 import { useGlobalContext } from "context";
 
@@ -9,19 +9,23 @@ import { Form } from "Components/Form";
 import { SelectionInfo } from "Components/SelectionInfo";
 import { Input } from "Components/Form/Input";
 import { Select } from "Components/Form/Select";
+import { Table } from "Components/Table";
+import { useWindowSize } from "Hooks/useWindowSize";
 
-import {
-  stateReducer,
-} from "Utils/fastCalcReducer";
+import { stateReducer } from "Components/Reducers/fastCalcReducer";
 
 import getAction from "Data/getAction";
 import initialState from "Data/initialState";
+import { generatePipeResults } from "Utils/fluidMechanicsFormulas";
 
 import findCurrentModeInLinks from "../../Utils/helpers";
 import { Mode } from "../../Data/sublinks";
 
 import * as fluids from "Data/fluids";
 import { FluidType } from "Data/fluids";
+import seamPipes from "Data/pipes";
+
+import "./FastCalc.scss";
 
 interface IFluidsLibrary {
   [key: string]: FluidType;
@@ -36,15 +40,44 @@ const media: IFluidsLibrary = { ...fluids };
 export default function FastCalc(): JSX.Element | null {
   const { closeSubmenu } = useGlobalContext();
   const [state, dispatch] = useReducer(stateReducer, initialState);
+  const [tableData, setTableData] = useState<any[]>([]);
   const { mode } = useParams<{ mode: string }>();
+  const { screenWidth } = useWindowSize();
 
   useEffect(() => {
     dispatch({ type: "initialCalc" });
   }, [mode]);
 
+  useEffect(() => {
+    if (typeof state.dynamicViscosity === "string") return;
+    const results = generatePipeResults(
+      seamPipes,
+      state.flow,
+      state.dynamicViscosity,
+      state.density
+    );
+    setTableData(results);
+  }, [state.flow, state.dynamicViscosity, state.density]);
+
+  function truncate(string: string): string {
+    if (string.includes(" ")) {
+      const stringArray: string[] = string.split(" ");
+      stringArray.splice(0, 1, stringArray[0][0] + ". ");
+      const truncatedString = stringArray.join(" ");
+      return truncatedString;
+    } else {
+      return string;
+    }
+  }
+
   const pickedMode: Mode | undefined = findCurrentModeInLinks(mode);
 
-  if (!pickedMode || pickedMode.inputs === undefined || pickedMode.info === undefined) return null;
+  if (
+    !pickedMode ||
+    pickedMode.inputs === undefined ||
+    pickedMode.info === undefined
+  )
+    return null;
 
   const inputs: string[] = pickedMode.inputs;
   const inputsToRender: IRenderedItems = pick(state, pickedMode.inputs);
@@ -65,7 +98,7 @@ export default function FastCalc(): JSX.Element | null {
           <Input
             key={key}
             name="flow-input"
-            label={`Flow (${inputsToRender[key]})`}
+            label="Flow"
             onInputChange={handleInputChange}
             type="number"
             min={0}
@@ -79,7 +112,7 @@ export default function FastCalc(): JSX.Element | null {
           <Input
             key={key}
             name="allowed-velocity-input"
-            label={`Allowed velocity (${inputsToRender[key]})`}
+            label="Allowed velocity"
             onInputChange={handleInputChange}
             type="range"
             min={1}
@@ -95,7 +128,7 @@ export default function FastCalc(): JSX.Element | null {
           <Input
             key={key}
             name="allowed-pressure-drop-input"
-            label={`Allowed pressure drop (${inputsToRender[key]})`}
+            label="Allowed pressure drop"
             onInputChange={handleInputChange}
             type="range"
             min={100}
@@ -111,7 +144,7 @@ export default function FastCalc(): JSX.Element | null {
           <Input
             key={key}
             name="delta-input"
-            label={`Delta (${inputsToRender[key]})`}
+            label="Delta"
             onInputChange={handleInputChange}
             type="number"
             min={0}
@@ -126,10 +159,10 @@ export default function FastCalc(): JSX.Element | null {
           <Input
             key={key}
             name="capacity-input"
-            label={`Capacity (${inputsToRender[key]})`}
+            label="Capacity"
             onInputChange={handleInputChange}
             type="number"
-            min={0}
+            // min={0}
             value={inputsToRender[key]}
             unit="kW"
           />
@@ -149,7 +182,11 @@ export default function FastCalc(): JSX.Element | null {
               <option
                 key={index}
                 value={option}
-                label={media[option].name}
+                label={
+                  screenWidth > 850
+                    ? media[option].name
+                    : truncate(media[option].name)
+                }
               ></option>
             ))}
           </Select>
@@ -181,7 +218,10 @@ export default function FastCalc(): JSX.Element | null {
   return (
     <div className="mode" onMouseOver={closeSubmenu}>
       <SelectionInfo infoProps={infoToRender} />
-      <Form>{inputs.map((key: string) => inputRenderSwitch(key))}</Form>
+      <div className="grid-content">
+        <Form>{inputs.map((key: string) => inputRenderSwitch(key))}</Form>
+        <Table tableData={tableData} selected={state.pipe} />
+      </div>
     </div>
   );
 }

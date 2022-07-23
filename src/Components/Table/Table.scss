@@ -1,0 +1,21 @@
+.table {
+  background: black;
+  font-size: 2rem;
+  &__row--selected{
+color: #2ecc71;
+  font-weight: 800;
+  background: #34495e;
+  }
+  max-width: 750px;
+}
+
+th,
+td {
+  border: 1px solid #73e8ae;
+  padding: 8px;
+}
+
+thead th {
+  width: 25%;
+}
+

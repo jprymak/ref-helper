@@ -1,0 +1,15 @@
+.grid-content {
+    width: 100%;
+    background: black;
+    // border-radius: 1rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 1rem;
+}
+
+@media screen and (min-width: 750px){
+    .grid-content {
+        grid-template-columns: 1fr 1fr;
+        border-radius: 1rem;
+    }
+}
