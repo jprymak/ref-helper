@@ -1,12 +1,17 @@
 .table {
   background: black;
   font-size: 2rem;
-  &__row--selected{
-color: #2ecc71;
-  font-weight: 800;
-  background: #34495e;
-  }
   max-width: 750px;
+  font-weight: 800;
+  &__row--recommended {
+    color: #2ecc71;
+  }
+  &__row--warning {
+    color: red;
+  }
+  &__row--discouraged {
+    color: #e67e22;
+  }
 }
 
 th,
@@ -18,4 +23,3 @@ td {
 thead th {
   width: 25%;
 }
-

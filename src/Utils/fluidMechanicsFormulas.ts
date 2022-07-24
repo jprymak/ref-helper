@@ -134,16 +134,70 @@ export function generatePipeResults(
       flow,
       innerDiameterInMeters
     );
-    const unitPressureDrop = calculateUnitPipePressureDrop(
+    const unitPressureDrop = +calculateUnitPipePressureDrop(
       innerDiameterInMeters,
       density,
       velocityInMetersPerSeconds,
       viscosity
     ).toFixed(0);
 
-    const obj = { pipe, velocity: velocityInMetersPerSeconds, unitPressureDrop };
+    function giveOpinionOnPipeSelection(
+      pipe: string,
+      unitPressureDrop: number,
+      velocityInMetersPerSeconds: number
+    ): string {
+      if (+pipe < 80) {
+        if (unitPressureDrop >= 120 && unitPressureDrop <= 340) {
+          return "recommended";
+        } else if (unitPressureDrop > 600 || velocityInMetersPerSeconds > 2) {
+          return "warning";
+        } else if (unitPressureDrop < 120 || velocityInMetersPerSeconds < 0.5) {
+          return "discouraged";
+        } else return "none";
+      }
+      if (+pipe >= 80) {
+        if (
+          unitPressureDrop >= 120 &&
+          unitPressureDrop <= 300 &&
+          velocityInMetersPerSeconds < 2.5
+        ) {
+          return "recommended";
+        } else if (
+          velocityInMetersPerSeconds >= 2.5 ||
+          unitPressureDrop > 600
+        ) {
+          return "warning";
+        } else if (unitPressureDrop < 70 || velocityInMetersPerSeconds < 1) {
+          return "discouraged";
+        } else return "none";
+      }
+
+      return "none";
+    }
+    const opinion = giveOpinionOnPipeSelection(
+      pipe,
+      unitPressureDrop,
+      velocityInMetersPerSeconds
+    );
+    const obj = {
+      pipe,
+      velocity: velocityInMetersPerSeconds,
+      unitPressureDrop,
+      opinion,
+    };
 
     results.push(obj);
+  }
+  const recommendedCheck = results.find((el) => el.opinion === "recommended");
+
+  if (!recommendedCheck) {
+    for(let i=0; i<results.length; i++){
+      if(results[i].unitPressureDrop<200 && results[i].opinion!=="recommended"){
+        results[i].opinion = "recommended";
+        break;
+      }
+    }
+
   }
   return results;
 }

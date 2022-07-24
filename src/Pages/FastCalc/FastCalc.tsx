@@ -57,7 +57,7 @@ export default function FastCalc(): JSX.Element | null {
       state.density
     );
     setTableData(results);
-  }, [state.flow, state.dynamicViscosity, state.density]);
+  }, [state.flow, state.dynamicViscosity, state.density, state.medium]);
 
   function truncate(string: string): string {
     if (string.includes(" ")) {
