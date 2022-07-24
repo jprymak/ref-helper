@@ -9,12 +9,10 @@ interface ITableRow {
 
 interface ITableProps {
   tableData: ITableRow[];
-  selected: string;
 }
 
 export default function Table({
-  tableData,
-  selected,
+  tableData
 }: ITableProps): JSX.Element {
   
   return (

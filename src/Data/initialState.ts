@@ -9,6 +9,7 @@ const initialState:FastCalcState = {
   dynamicViscosity: 0,
   density: 998,
   specificHeat: 4.182,
+  pipeType: "seamPipes"
 };
 
 export default initialState;

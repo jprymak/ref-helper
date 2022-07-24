@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useEffect, useReducer, useState } from "react";
-import { pick, truncate } from "lodash";
+import { pick } from "lodash";
 
 import { useGlobalContext } from "context";
 
@@ -23,12 +23,16 @@ import { Mode } from "../../Data/sublinks";
 
 import * as fluids from "Data/fluids";
 import { FluidType } from "Data/fluids";
-import seamPipes from "Data/pipes";
+import * as pipes from "Data/pipes";
+import {PipesObject} from "Data/pipes";
 
 import "./FastCalc.scss";
 
 interface IFluidsLibrary {
   [key: string]: FluidType;
+}
+interface IPipesLibrary {
+  [key: string]: PipesObject;
 }
 
 interface IRenderedItems {
@@ -36,6 +40,7 @@ interface IRenderedItems {
 }
 
 const media: IFluidsLibrary = { ...fluids };
+const pipeTypes: IPipesLibrary = { ...pipes };
 
 export default function FastCalc(): JSX.Element | null {
   const { closeSubmenu } = useGlobalContext();
@@ -47,17 +52,19 @@ export default function FastCalc(): JSX.Element | null {
   useEffect(() => {
     dispatch({ type: "initialCalc" });
   }, [mode]);
-
+  console.log(pipeTypes[state.seamPipes]);
   useEffect(() => {
-    if (typeof state.dynamicViscosity === "string") return;
+    if (typeof state.dynamicViscosity === "string" || typeof state.pipeType !== "string") return;
+    // const selectedPipe = pipes[state.pipeType];
+   
     const results = generatePipeResults(
-      seamPipes,
+      pipeTypes[state.pipeType],
       state.flow,
       state.dynamicViscosity,
       state.density
     );
     setTableData(results);
-  }, [state.flow, state.dynamicViscosity, state.density, state.medium]);
+  }, [state.flow, state.dynamicViscosity, state.density, state.medium, state.pipeType]);
 
   function truncate(string: string): string {
     if (string.includes(" ")) {
@@ -107,38 +114,6 @@ export default function FastCalc(): JSX.Element | null {
           />
         );
 
-      case "allowedVelocity":
-        return (
-          <Input
-            key={key}
-            name="allowed-velocity-input"
-            label="Allowed velocity"
-            onInputChange={handleInputChange}
-            type="range"
-            min={1}
-            max={5}
-            step="0.1"
-            value={inputsToRender[key]}
-            unit="m/s"
-          />
-        );
-
-      case "allowedPressureDrop":
-        return (
-          <Input
-            key={key}
-            name="allowed-pressure-drop-input"
-            label="Allowed pressure drop"
-            onInputChange={handleInputChange}
-            type="range"
-            min={100}
-            max={1000}
-            step="50"
-            value={inputsToRender[key]}
-            unit="Pa/m"
-          />
-        );
-
       case "delta":
         return (
           <Input
@@ -162,7 +137,7 @@ export default function FastCalc(): JSX.Element | null {
             label="Capacity"
             onInputChange={handleInputChange}
             type="number"
-            // min={0}
+            min={0}
             value={inputsToRender[key]}
             unit="kW"
           />
@@ -187,6 +162,26 @@ export default function FastCalc(): JSX.Element | null {
                     ? media[option].name
                     : truncate(media[option].name)
                 }
+              ></option>
+            ))}
+          </Select>
+        );
+
+        case "pipeType":
+        return (
+          <Select
+            key={key}
+            name="pipe-type-select"
+            label="Pipe type"
+            onInputChange={handleInputChange}
+            value={inputsToRender[key]}
+            unit="-"
+          >
+            {Object.keys({...pipes}).map((option, index) => (
+              <option
+                key={index}
+                value={option}
+                label={option}
               ></option>
             ))}
           </Select>
@@ -220,7 +215,7 @@ export default function FastCalc(): JSX.Element | null {
       <SelectionInfo infoProps={infoToRender} />
       <div className="grid-content">
         <Form>{inputs.map((key: string) => inputRenderSwitch(key))}</Form>
-        <Table tableData={tableData} selected={state.pipe} />
+        <Table tableData={tableData}/>
       </div>
     </div>
   );

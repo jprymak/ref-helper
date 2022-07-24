@@ -3,7 +3,6 @@ import {
   getMediumParameters,
   calculateDynamicViscosity,
 } from "Utils/fluidMechanicsFormulas";
-import seamPipes from "Data/pipes";
 
 import * as fluids from "../../Data/fluids";
 import { FluidType } from "../../Data/fluids";
@@ -20,7 +19,8 @@ export type FastCalcAction =
   | { type: "setDelta"; payload: string }
   | { type: "setFlow"; payload: string }
   | { type: "setMedium"; payload: string; mode: string }
-  | { type: "setTemperature"; payload: string; mode: string };
+  | { type: "setTemperature"; payload: string; mode: string }
+  | { type: "setPipeType"; payload: string };
 
 export interface FastCalcState {
   [key: string]: string | number;
@@ -32,6 +32,7 @@ export interface FastCalcState {
   dynamicViscosity: number;
   density: number;
   specificHeat: number;
+  pipeType: string;
 }
 
 export const stateReducer = (
@@ -89,6 +90,10 @@ export const stateReducer = (
       ).toString();
 
       return { ...state, delta, flow };
+    }
+
+    case "setPipeType": {
+      return { ...state, pipeType: action.payload };
     }
 
     case "setMedium": {

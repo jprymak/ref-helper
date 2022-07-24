@@ -44,6 +44,7 @@ const links: LinkObject[] = [
           "delta",
           "medium",
           "temperature",
+          "pipeType"
         ],
       },
       "calc-2": {
@@ -51,7 +52,7 @@ const links: LinkObject[] = [
         url: "/ref-helper/fast-calc/calc-2",
         name: "Select Pipe By Flow",
         info: ["flow"],
-        inputs: ["flow", "medium"],
+        inputs: ["flow", "medium", "pipeType"],
       },
       // "calc-3": {
       //   id: "calc-3",

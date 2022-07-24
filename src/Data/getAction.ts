@@ -12,6 +12,7 @@ const getAction = (e:React.ChangeEvent<HTMLInputElement>|React.ChangeEvent<HTMLS
         case "delta-input": return { type: "setDelta", payload: e.target.value };
         case "flow-input": return { type: "setFlow", payload: e.target.value };
         case "medium-select": return { type: "setMedium", payload: e.target.value, mode };
+        case "pipe-type-select": return { type: "setPipeType", payload: e.target.value};
         case "temperature-select": return { type: "setTemperature", payload: e.target.value, mode};
         default: return {type: "initialCalc"};
     }
