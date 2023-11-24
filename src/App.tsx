@@ -1,6 +1,6 @@
 import React from "react";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { NavBar } from "./Components/NavBar";
 import { Home, FastCalc, Projects } from "./Pages";
@@ -13,17 +13,11 @@ function App(): JSX.Element {
       <Router>
         <NavBar />
         <Sidebar />
-        <Switch>
-          <Route path="/ref-helper/fast-calc/:mode">
-            <FastCalc />
-          </Route>
-          <Route path="/ref-helper/projects/:mode">
-            <Projects />
-          </Route>
-          <Route path="/ref-helper/">
-            <Home />
-          </Route>
-        </Switch>
+        <Routes>
+          <Route path="/ref-helper/fast-calc/:mode" element={<FastCalc />} />
+          <Route path="/ref-helper/projects/:mode" element={<Projects />} />
+          <Route path="/ref-helper/" element={<Home />} />
+        </Routes>
         <Submenu />
       </Router>
     </>
