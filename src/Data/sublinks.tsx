@@ -9,7 +9,7 @@ export interface LinkObject {
   modes?: Modes;
 }
 
-export interface Mode{
+export interface Mode {
   id: string;
   url: string;
   name: string;
@@ -18,16 +18,16 @@ export interface Mode{
 }
 
 interface Modes {
-  [key: string]: Mode
+  [key: string]: Mode;
 }
 
 const links: LinkObject[] = [
-  {
-    id: 0,
-    page: "home",
-    url: "/ref-helper/",
-    icon: <FaHome className="navbar__icon" />,
-  },
+  // {
+  //   id: 0,
+  //   page: "home",
+  //   url: "/ref-helper/",
+  //   icon: <FaHome className="navbar__icon" />,
+  // },
   {
     id: 1,
     page: "fast calc",
@@ -39,13 +39,7 @@ const links: LinkObject[] = [
         url: "/ref-helper/fast-calc/calc-1",
         name: "Select Pipe By Capacity",
         info: ["flow"],
-        inputs: [
-          "capacity",
-          "delta",
-          "medium",
-          "temperature",
-          "pipeType"
-        ],
+        inputs: ["capacity", "delta", "medium", "temperature", "pipeType"],
       },
       "calc-2": {
         id: "calc-2",
@@ -54,33 +48,26 @@ const links: LinkObject[] = [
         info: ["flow"],
         inputs: ["flow", "medium", "pipeType"],
       },
-      // "calc-3": {
-      //   id: "calc-3",
-      //   url: "/ref-helper/fast-calc/calc-3",
-      //   name: "Calculate flow",
-      //   info: ["flow"],
-      //   inputs: ["capacity", "delta", "medium", "temperature"],
-      // },
     },
   },
-  {
-    id: 2,
-    page: "projects",
-    url: "/ref-helper/projects",
-    icon: <FaFolder className="navbar__icon" />,
-    modes: {
-      "projects-1": {
-        id: "projects-1",
-        name: "New project",
-        url: "/ref-helper/projects/projects-1",
-      },
-      "projects-2": {
-        id: "projects-2",
-        name: "Browse Projects",
-        url: "/ref-helper/projects/projects-2",
-      },
-    },
-  },
+  // {
+  //   id: 2,
+  //   page: "projects",
+  //   url: "/ref-helper/projects",
+  //   icon: <FaFolder className="navbar__icon" />,
+  //   modes: {
+  //     "projects-1": {
+  //       id: "projects-1",
+  //       name: "New project",
+  //       url: "/ref-helper/projects/projects-1",
+  //     },
+  //     "projects-2": {
+  //       id: "projects-2",
+  //       name: "Browse Projects",
+  //       url: "/ref-helper/projects/projects-2",
+  //     },
+  //   },
+  // },
 ];
 
 export default links;

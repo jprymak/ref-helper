@@ -15,8 +15,8 @@ function App(): JSX.Element {
         <Sidebar />
         <Routes>
           <Route path="/ref-helper/fast-calc/:mode" element={<FastCalc />} />
-          <Route path="/ref-helper/projects/:mode" element={<Projects />} />
-          <Route path="/ref-helper/" element={<Home />} />
+          {/* <Route path="/ref-helper/projects/:mode" element={<Projects />} />
+          <Route path="/ref-helper/" element={<Home />} /> */}
         </Routes>
         <Submenu />
       </Router>
