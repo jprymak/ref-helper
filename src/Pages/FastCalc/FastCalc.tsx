@@ -52,7 +52,7 @@ export default function FastCalc(): JSX.Element | null {
   useEffect(() => {
     dispatch({ type: "initialCalc" });
   }, [mode]);
-  console.log({ state });
+
   useEffect(() => {
     if (
       typeof state.dynamicViscosity === "string" ||
