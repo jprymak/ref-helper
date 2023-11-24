@@ -24,7 +24,7 @@ import { Mode } from "../../Data/sublinks";
 import * as fluids from "Data/fluids";
 import { FluidType } from "Data/fluids";
 import * as pipes from "Data/pipes";
-import {PipesObject} from "Data/pipes";
+import { PipesObject } from "Data/pipes";
 
 import "./FastCalc.scss";
 
@@ -35,7 +35,7 @@ interface IPipesLibrary {
   [key: string]: PipesObject;
 }
 
-interface IRenderedItems {
+export interface IRenderedItems {
   [key: string]: string | number;
 }
 
@@ -52,11 +52,15 @@ export default function FastCalc(): JSX.Element | null {
   useEffect(() => {
     dispatch({ type: "initialCalc" });
   }, [mode]);
-  console.log(pipeTypes[state.seamPipes]);
+  console.log({ state });
   useEffect(() => {
-    if (typeof state.dynamicViscosity === "string" || typeof state.pipeType !== "string") return;
+    if (
+      typeof state.dynamicViscosity === "string" ||
+      typeof state.pipeType !== "string"
+    )
+      return;
     // const selectedPipe = pipes[state.pipeType];
-   
+
     const results = generatePipeResults(
       pipeTypes[state.pipeType],
       state.flow,
@@ -64,7 +68,13 @@ export default function FastCalc(): JSX.Element | null {
       state.density
     );
     setTableData(results);
-  }, [state.flow, state.dynamicViscosity, state.density, state.medium, state.pipeType]);
+  }, [
+    state.flow,
+    state.dynamicViscosity,
+    state.density,
+    state.medium,
+    state.pipeType,
+  ]);
 
   function truncate(string: string): string {
     if (string.includes(" ")) {
@@ -77,14 +87,13 @@ export default function FastCalc(): JSX.Element | null {
     }
   }
 
-  const pickedMode: Mode | undefined = findCurrentModeInLinks(mode);
-
+  const pickedMode: Mode | null = findCurrentModeInLinks(mode);
   if (
     !pickedMode ||
     pickedMode.inputs === undefined ||
     pickedMode.info === undefined
   )
-    return null;
+    return <>No mode is picked</>;
 
   const inputs: string[] = pickedMode.inputs;
   const inputsToRender: IRenderedItems = pick(state, pickedMode.inputs);
@@ -167,7 +176,7 @@ export default function FastCalc(): JSX.Element | null {
           </Select>
         );
 
-        case "pipeType":
+      case "pipeType":
         return (
           <Select
             key={key}
@@ -177,12 +186,8 @@ export default function FastCalc(): JSX.Element | null {
             value={inputsToRender[key]}
             unit="-"
           >
-            {Object.keys({...pipes}).map((option, index) => (
-              <option
-                key={index}
-                value={option}
-                label={option}
-              ></option>
+            {Object.keys({ ...pipes }).map((option, index) => (
+              <option key={index} value={option} label={option}></option>
             ))}
           </Select>
         );
@@ -215,7 +220,7 @@ export default function FastCalc(): JSX.Element | null {
       <SelectionInfo infoProps={infoToRender} />
       <div className="grid-content">
         <Form>{inputs.map((key: string) => inputRenderSwitch(key))}</Form>
-        <Table tableData={tableData}/>
+        <Table tableData={tableData} />
       </div>
     </div>
   );

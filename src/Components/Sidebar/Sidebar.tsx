@@ -6,43 +6,49 @@ import { useGlobalContext } from "context";
 
 import links from "Data/sublinks";
 
-import {Sublink} from "./Sublink";
+import { Sublink } from "./Sublink";
 
 import "./index.scss";
 
-export default function Sidebar(){
-  const { isSidebarOpen, closeSidebar} = useGlobalContext();
+export default function Sidebar() {
+  const { isSidebarOpen, closeSidebar } = useGlobalContext();
 
-  const classes=classNames({
+  const classes = classNames({
     "sidebar-wrapper": true,
-    "sidebar-wrapper--show": isSidebarOpen
+    "sidebar-wrapper--show": isSidebarOpen,
   });
 
-  const handleSublinkClick = () =>{
+  const handleSublinkClick = () => {
     closeSidebar();
   };
 
   return (
-    <div
-      className={classes}
-    >
+    <div className={classes}>
       <aside className="sidebar">
         <button className="sidebar__close-btn" onClick={closeSidebar}>
           <FaTimes />
         </button>
         <div className="sidebar-groups">
-          {links.map(link=> {
+          {links.map((link) => {
             const { modes, page, id, icon } = link;
             return (
               <div className="sidebar-group" key={id}>
-                <h4 className="sidebar-group__heading">{icon}{page}</h4>
+                <h4 className="sidebar-group__heading">
+                  {icon}
+                  {page}
+                </h4>
                 <ul className="sidebar-group__sublinks">
-                  {modes ? Object.keys(modes)?.map((mode) => {
-                    const {id, name, url } = modes[mode];
+                  {modes?.map((mode) => {
+                    const { id, name, url } = mode;
                     return (
-                      <Sublink key={id} handleSublinkClick={handleSublinkClick} name={name} url={url}/>
+                      <Sublink
+                        key={id}
+                        handleSublinkClick={handleSublinkClick}
+                        name={name}
+                        url={url}
+                      />
                     );
-                  }) : null}
+                  })}
                 </ul>
               </div>
             );
@@ -51,5 +57,4 @@ export default function Sidebar(){
       </aside>
     </div>
   );
-};
-
+}

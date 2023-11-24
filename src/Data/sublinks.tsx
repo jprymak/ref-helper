@@ -6,19 +6,15 @@ export interface LinkObject {
   page: string;
   url: string;
   icon: JSX.Element;
-  modes?: Modes;
+  modes: Mode[];
 }
 
 export interface Mode {
   id: string;
   url: string;
   name: string;
-  info?: string[];
-  inputs?: string[];
-}
-
-interface Modes {
-  [key: string]: Mode;
+  info: string[];
+  inputs: string[];
 }
 
 const links: LinkObject[] = [
@@ -33,22 +29,22 @@ const links: LinkObject[] = [
     page: "fast calc",
     url: "/ref-helper/fast-calc",
     icon: <FaCalculator className="navbar__icon" />,
-    modes: {
-      "calc-1": {
+    modes: [
+      {
         id: "calc-1",
         url: "/ref-helper/fast-calc/calc-1",
         name: "Select Pipe By Capacity",
         info: ["flow"],
         inputs: ["capacity", "delta", "medium", "temperature", "pipeType"],
       },
-      "calc-2": {
+      {
         id: "calc-2",
         url: "/ref-helper/fast-calc/calc-2",
         name: "Select Pipe By Flow",
         info: ["flow"],
         inputs: ["flow", "medium", "pipeType"],
       },
-    },
+    ],
   },
   // {
   //   id: 2,

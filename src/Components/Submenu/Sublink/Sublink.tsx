@@ -2,7 +2,13 @@ import classNames from "classnames";
 
 import { Link, useLocation } from "react-router-dom";
 
-function Sublink({ handleSublinkClick, name, url }) {
+interface SublinkProps {
+  handleSublinkClick: () => void;
+  name: string;
+  url: string;
+}
+
+function Sublink({ handleSublinkClick, name, url }: SublinkProps) {
   const location = useLocation();
   const classes = classNames({
     sublinks__sublink: true,

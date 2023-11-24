@@ -1,11 +1,30 @@
 import React, { useState, useContext } from "react";
-import links from "./Data/sublinks";
-const AppContext = React.createContext();
+import links, { LinkObject } from "./Data/sublinks";
 
-const AppProvider = ({ children }) => {
+import { Mode } from "./Data/sublinks";
+
+export interface IAppContext {
+  isSidebarOpen: boolean;
+  openSidebar: () => void;
+  closeSidebar: () => void;
+  isSubmenuOpen: boolean;
+  openSubmenu: (text: string, coordinates: any) => void;
+  closeSubmenu: () => void;
+  page: { page: string; modes: Mode[] };
+  location: Record<string, any>;
+}
+
+type PageType = Pick<LinkObject, "page" | "modes">;
+
+const AppContext = React.createContext<IAppContext | null>(null);
+
+const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
-  const [page, setPage] = useState({ page: "", modes: [] });
+  const [page, setPage] = useState<PageType>({
+    page: "",
+    modes: [],
+  });
   const [location, setLocation] = useState({});
   const openSidebar = () => {
     setIsSidebarOpen(true);
@@ -13,12 +32,14 @@ const AppProvider = ({ children }) => {
   const closeSidebar = () => {
     setIsSidebarOpen(false);
   };
-  const openSubmenu = (text, coordinates) => {
+  const openSubmenu = (text: string, coordinates: any) => {
     const page = links.find((link) => link.page === text);
-    if (!page.modes) return;
-    setPage(page);
-    setLocation(coordinates);
-    setIsSubmenuOpen(true);
+    if (!page) return;
+    else {
+      setPage(page);
+      setLocation(coordinates);
+      setIsSubmenuOpen(true);
+    }
   };
   const closeSubmenu = () => {
     setIsSubmenuOpen(false);
@@ -43,7 +64,11 @@ const AppProvider = ({ children }) => {
 };
 // make sure use
 export const useGlobalContext = () => {
-  return useContext(AppContext);
+  const appContext = useContext(AppContext);
+  if (!appContext) {
+    throw "Missing appContext data!";
+  }
+  return appContext;
 };
 
 export { AppContext, AppProvider };

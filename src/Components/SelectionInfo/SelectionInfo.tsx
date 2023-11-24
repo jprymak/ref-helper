@@ -2,8 +2,14 @@ import React from "react";
 
 import "./index.scss";
 
-export default function SelectionInfo({ infoProps }) {
-  const renderSwitch = (key) => {
+import { IRenderedItems } from "Pages/FastCalc/FastCalc";
+
+interface SelectionInfoProps {
+  infoProps: IRenderedItems;
+}
+
+export default function SelectionInfo({ infoProps }: SelectionInfoProps) {
+  const renderSwitch = (key: string) => {
     switch (key) {
       case "pipe":
         return (

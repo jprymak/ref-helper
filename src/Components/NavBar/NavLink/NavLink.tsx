@@ -2,7 +2,14 @@ import classNames from "classnames";
 
 import { Link, useLocation } from "react-router-dom";
 
-export default function NavLink({ data, displaySubmenu }) {
+import { LinkObject } from "Data/sublinks";
+
+interface NavLinkProps {
+  data: LinkObject;
+  displaySubmenu: () => void;
+}
+
+export default function NavLink({ data, displaySubmenu }: NavLinkProps) {
   const { page, icon, url } = data;
   const location = useLocation();
 
@@ -16,10 +23,7 @@ export default function NavLink({ data, displaySubmenu }) {
 
   return (
     <li className={listItemClasses} onMouseOver={displaySubmenu}>
-      <Link
-        className="navbar__link"
-        to={data.modes ? data.modes[Object.keys(data.modes)[0]].url : url}
-      >
+      <Link className="navbar__link" to={url}>
         {icon}
         {page}
       </Link>
