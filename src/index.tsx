@@ -9,12 +9,11 @@ import reportWebVitals from "./reportWebVitals";
 ReactDOM.render(
   <React.StrictMode>
     <AppProvider>
-    <App />
+      <App />
     </AppProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
-
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

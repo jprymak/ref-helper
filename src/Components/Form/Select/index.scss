@@ -1,11 +1,11 @@
-@import "Styles/variables";
+@import "src/Styles/variables";
 
-input{
-    width: 100%;
+input {
+  width: 100%;
 }
 
-label, span{
-    justify-self: start;
-    align-self: center;
+label,
+span {
+  justify-self: start;
+  align-self: center;
 }
-

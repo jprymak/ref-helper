@@ -1,37 +1,33 @@
 import React from "react";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import {NavBar} from "./Components/NavBar";
-import {Home, FastCalc, Projects} from "./Pages";
+import { NavBar } from "./Components/NavBar";
+import { Home, FastCalc, Projects } from "./Pages";
 import { Submenu } from "./Components/Submenu";
-import {Sidebar} from "Components/Sidebar";
+import { Sidebar } from "Components/Sidebar";
 
-function App():JSX.Element {
-    return (
-      <>
+function App(): JSX.Element {
+  return (
+    <>
       <Router>
-        <NavBar/>
-        <Sidebar/>
+        <NavBar />
+        <Sidebar />
         <Switch>
           <Route path="/ref-helper/fast-calc/:mode">
-          <FastCalc/>
-            </Route>
-            <Route path="/ref-helper/projects/:mode">
-          <Projects/>
-            </Route>
-            <Route path="/ref-helper/">
-          <Home />
-            </Route>
+            <FastCalc />
+          </Route>
+          <Route path="/ref-helper/projects/:mode">
+            <Projects />
+          </Route>
+          <Route path="/ref-helper/">
+            <Home />
+          </Route>
         </Switch>
-        <Submenu/>
-        </Router>
-      </>
-    );
+        <Submenu />
+      </Router>
+    </>
+  );
 }
 
 export default App;
