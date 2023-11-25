@@ -1,6 +1,6 @@
-import { FastCalcState } from "Components/Reducers/fastCalcReducer";
+import { FastCalcState } from "Reducers/fastCalcReducer";
 
-const initialState:FastCalcState = {
+const initialState: FastCalcState = {
   capacity: "100",
   temperature: "20",
   flow: "21.6",
@@ -9,7 +9,7 @@ const initialState:FastCalcState = {
   dynamicViscosity: 0,
   density: 998,
   specificHeat: 4.182,
-  pipeType: "seamPipes"
+  pipeType: "seamPipes",
 };
 
 export default initialState;

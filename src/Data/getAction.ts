@@ -1,6 +1,6 @@
 import React from "react";
 
-import { FastCalcAction } from "Components/Reducers/fastCalcReducer";
+import { FastCalcAction } from "Reducers/fastCalcReducer";
 
 const getAction = (
   e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>,
