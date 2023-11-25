@@ -1,24 +1,18 @@
-import links from "../Data/sublinks";
-import { Mode, LinkObject } from "../Data/sublinks";
+import links from "../Data/links";
+import { Mode } from "../Data/links";
 
 export default function findCurrentModeInLinks(
   modeToFind: string | undefined
-): Mode | null {
+): Mode {
   if (!modeToFind) {
-    return null;
-  }
-  let match;
-  const link = links.forEach((linkObj) =>
-    linkObj.modes.forEach((mode) => {
-      if (mode.id === modeToFind) {
-        match = mode;
-      }
-    })
-  );
-
-  if (!match) {
-    return null;
+    return links[0];
   }
 
-  return match;
+  for (let mode of links) {
+    if (mode.id === modeToFind) {
+      return mode;
+    }
+  }
+
+  return links[0];
 }

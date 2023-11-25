@@ -1,26 +1,22 @@
+@import "../../Styles/variables";
+
 .navbar {
   display: flex;
-  padding: 1.5rem 0;
+  padding: 1.5rem 1.5rem;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: flex-end;
   font-size: 1.9rem;
-  background-color: black;
+  background-color: $primary-bg;
+  gap: 0.3rem;
 
   @media screen and (min-width: "400px") {
-    gap: 0.3rem;
-    flex-direction: column;
-    justify-content: center;
   }
 
   &__list {
-    display: none;
-
-    @media screen and (min-width: "400px") {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-      color: white;
-    }
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    color: white;
   }
   &__list-item {
     &--active {
@@ -33,28 +29,5 @@
     color: inherit;
     text-transform: capitalize;
     margin: 0.5rem 1rem;
-    @media screen and (max-width: "400px") {
-      gap: 0.3rem;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-  &__icon {
-    margin-right: 0.4rem;
-  }
-  &__button{
-    cursor: pointer;
-    display: block;
-    margin-right: 3rem;
-    height: 3.5rem;
-    width: 4rem;
-    @media screen and (min-width: "400px") {
-      display: none;
-    }
-    svg{
-      width: 2.5rem;
-      height: 2.5rem;
-    }
   }
 }

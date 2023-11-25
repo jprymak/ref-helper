@@ -1,26 +1,16 @@
-.mode{
-    padding: 0 1rem 0 1rem;
-    color: white;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    min-height: 100vh;
-    font-size: 1.9rem;
-    background-image: $basic-gradient;
+.mode {
+  padding: 0 1rem 0 1rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  font-size: 1.9rem;
+  background-image: $basic-gradient;
 }
 
-@media screen and (max-width: 750px){
-    .mode {
-        padding: 0;
-
-    }
+@media screen and (max-width: 750px) {
+  .mode {
+    padding: 0;
+  }
 }
-
-
-
-
-
-
-
-

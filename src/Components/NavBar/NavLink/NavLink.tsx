@@ -2,30 +2,25 @@ import classNames from "classnames";
 
 import { Link, useLocation } from "react-router-dom";
 
-import { LinkObject } from "Data/sublinks";
+import type { Mode } from "Data/links";
 
 interface NavLinkProps {
-  data: LinkObject;
-  displaySubmenu: () => void;
+  data: Mode;
 }
 
-export default function NavLink({ data, displaySubmenu }: NavLinkProps) {
-  const { page, icon, url } = data;
+export default function NavLink({ data }: NavLinkProps) {
+  const { url, name } = data;
   const location = useLocation();
 
   const listItemClasses = classNames({
     "navbar__list-item": true,
-    "navbar__list-item--active":
-      location.pathname.includes(url) && url !== "/ref-helper/"
-        ? true
-        : location.pathname === url,
+    "navbar__list-item--active": location.pathname === url!,
   });
 
   return (
-    <li className={listItemClasses} onMouseOver={displaySubmenu}>
+    <li className={listItemClasses}>
       <Link className="navbar__link" to={url}>
-        {icon}
-        {page}
+        {name}
       </Link>
     </li>
   );

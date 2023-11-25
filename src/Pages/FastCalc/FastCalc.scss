@@ -1,14 +1,17 @@
+@import "../../Styles/variables";
+
 .grid-content {
-    width: 100%;
-    background: black;
-    display: grid;
-    grid-template-columns: 1fr;
-    padding: 1rem;
+  width: 100%;
+  background: $primary-bg;
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 1rem;
 }
 
-@media screen and (min-width: 750px){
-    .grid-content {
-        grid-template-columns: 1fr 1fr;
-        border-radius: 1rem;
-    }
+@media screen and (min-width: 750px) {
+  .grid-content {
+    grid-template-columns: 1fr 1fr;
+    border-radius: 1rem;
+    max-width: 830px;
+  }
 }

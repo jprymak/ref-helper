@@ -3,8 +3,6 @@ import { useParams } from "react-router-dom";
 import { useEffect, useReducer, useState } from "react";
 import { pick } from "lodash";
 
-import { useGlobalContext } from "context";
-
 import { Form } from "Components/Form";
 import { SelectionInfo } from "Components/SelectionInfo";
 import { Input } from "Components/Form/Input";
@@ -19,7 +17,7 @@ import initialState from "Data/initialState";
 import { generatePipeResults } from "Utils/fluidMechanicsFormulas";
 
 import findCurrentModeInLinks from "../../Utils/helpers";
-import { Mode } from "../../Data/sublinks";
+import { Mode } from "../../Data/links";
 
 import * as fluids from "Data/fluids";
 import { FluidType } from "Data/fluids";
@@ -27,6 +25,7 @@ import * as pipes from "Data/pipes";
 import { PipesObject } from "Data/pipes";
 
 import "./FastCalc.scss";
+import { useGlobalContext } from "context";
 
 interface IFluidsLibrary {
   [key: string]: FluidType;
@@ -43,7 +42,6 @@ const media: IFluidsLibrary = { ...fluids };
 const pipeTypes: IPipesLibrary = { ...pipes };
 
 export default function FastCalc(): JSX.Element | null {
-  const { closeSubmenu } = useGlobalContext();
   const [state, dispatch] = useReducer(stateReducer, initialState);
   const [tableData, setTableData] = useState<any[]>([]);
   const { mode } = useParams<{ mode: string }>();
@@ -86,14 +84,15 @@ export default function FastCalc(): JSX.Element | null {
       return string;
     }
   }
-
-  const pickedMode: Mode | null = findCurrentModeInLinks(mode);
-  if (
-    !pickedMode ||
-    pickedMode.inputs === undefined ||
-    pickedMode.info === undefined
-  )
-    return <>No mode is picked</>;
+  // console.log({ mode });
+  const pickedMode: Mode = findCurrentModeInLinks(mode);
+  // console.log({ pickedMode });
+  // if (
+  //   !pickedMode ||
+  //   pickedMode.inputs === undefined ||
+  //   pickedMode.info === undefined
+  // )
+  //   return <>No mode is picked</>;
 
   const inputs: string[] = pickedMode.inputs;
   const inputsToRender: IRenderedItems = pick(state, pickedMode.inputs);
@@ -216,7 +215,7 @@ export default function FastCalc(): JSX.Element | null {
   };
 
   return (
-    <div className="mode" onMouseOver={closeSubmenu}>
+    <div className="mode">
       <SelectionInfo infoProps={infoToRender} />
       <div className="grid-content">
         <Form>{inputs.map((key: string) => inputRenderSwitch(key))}</Form>

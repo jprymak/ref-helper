@@ -1,5 +1,7 @@
+@import "../../Styles/variables";
+
 .table {
-  background: black;
+  background: $primary-bg;
   font-size: 2rem;
   max-width: 750px;
   font-weight: 800;
