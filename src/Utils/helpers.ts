@@ -35,3 +35,9 @@ export function truncate(string: string): string {
     return string;
   }
 }
+
+export const urlMatchCheck = (pathname: string, url: string) => {
+  if (pathname[pathname.length - 1] === "/") {
+    return pathname.slice(0, pathname.length - 1) === url;
+  } else return pathname === url;
+};

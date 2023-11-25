@@ -3,6 +3,7 @@ import classNames from "classnames";
 import { Link, useLocation } from "react-router-dom";
 
 import type { Mode } from "Data/links";
+import { urlMatchCheck } from "Utils/helpers";
 
 interface NavLinkProps {
   data: Mode;
@@ -14,7 +15,7 @@ export default function NavLink({ data }: NavLinkProps) {
 
   const listItemClasses = classNames({
     "navbar__list-item": true,
-    "navbar__list-item--active": location.pathname === url,
+    "navbar__list-item--active": urlMatchCheck(location.pathname, url),
   });
 
   return (
