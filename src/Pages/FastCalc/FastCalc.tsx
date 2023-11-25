@@ -191,6 +191,7 @@ export default function FastCalc(): JSX.Element | null {
       <div className="grid-content">
         <Form>{inputs.map(renderInput)}</Form>
         <Table tableData={tableData} />
+        <p style={{ fontSize: "12px" }}>PWA update test</p>
       </div>
     </div>
   );
