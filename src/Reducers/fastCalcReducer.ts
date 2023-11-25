@@ -4,8 +4,8 @@ import {
   calculateDynamicViscosity,
 } from "Utils/fluidMechanicsFormulas";
 
-import * as fluids from "../../Data/fluids";
-import { FluidType } from "../../Data/fluids";
+import * as fluids from "../Data/fluids";
+import { FluidType } from "../Data/fluids";
 
 interface IFluidsLibrary {
   [key: string]: FluidType;
@@ -109,7 +109,7 @@ export const stateReducer = (
       const specificHeat = mediumParameters.specificHeat;
       const density = mediumParameters.density;
       const flow =
-        action.mode === "calc-2"
+        action.mode === ""
           ? state.flow
           : calculateVolumetricFlow(
               state.capacity,
@@ -142,7 +142,7 @@ export const stateReducer = (
       const specificHeat = mediumParameters.specificHeat;
       const density = mediumParameters.density;
       const flow =
-        action.mode === "calc-2"
+        action.mode === ""
           ? state.flow
           : calculateVolumetricFlow(
               state.capacity,

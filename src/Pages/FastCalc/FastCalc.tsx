@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer } from "react";
 import { pick } from "lodash";
 
 import { Form } from "Components/Form";
@@ -10,13 +10,17 @@ import { Select } from "Components/Form/Select";
 import { Table } from "Components/Table";
 import { useWindowSize } from "Hooks/useWindowSize";
 
-import { stateReducer } from "Components/Reducers/fastCalcReducer";
+import { stateReducer } from "Reducers/fastCalcReducer";
 
 import getAction from "Data/getAction";
 import initialState from "Data/initialState";
 import { generatePipeResults } from "Utils/fluidMechanicsFormulas";
 
-import findCurrentModeInLinks from "../../Utils/helpers";
+import {
+  findCurrentModeInLinks,
+  getLabelForPipes,
+  truncate,
+} from "../../Utils/helpers";
 import { Mode } from "../../Data/links";
 
 import * as fluids from "Data/fluids";
@@ -25,7 +29,6 @@ import * as pipes from "Data/pipes";
 import { PipesObject } from "Data/pipes";
 
 import "./FastCalc.scss";
-import { useGlobalContext } from "context";
 
 interface IFluidsLibrary {
   [key: string]: FluidType;
@@ -43,7 +46,6 @@ const pipeTypes: IPipesLibrary = { ...pipes };
 
 export default function FastCalc(): JSX.Element | null {
   const [state, dispatch] = useReducer(stateReducer, initialState);
-  const [tableData, setTableData] = useState<any[]>([]);
   const { mode } = useParams<{ mode: string }>();
   const { screenWidth } = useWindowSize();
 
@@ -51,49 +53,14 @@ export default function FastCalc(): JSX.Element | null {
     dispatch({ type: "initialCalc" });
   }, [mode]);
 
-  useEffect(() => {
-    if (
-      typeof state.dynamicViscosity === "string" ||
-      typeof state.pipeType !== "string"
-    )
-      return;
-    // const selectedPipe = pipes[state.pipeType];
-
-    const results = generatePipeResults(
-      pipeTypes[state.pipeType],
-      state.flow,
-      state.dynamicViscosity,
-      state.density
-    );
-    setTableData(results);
-  }, [
+  const tableData = generatePipeResults(
+    pipeTypes[state.pipeType],
     state.flow,
     state.dynamicViscosity,
-    state.density,
-    state.medium,
-    state.pipeType,
-  ]);
+    state.density
+  );
 
-  function truncate(string: string): string {
-    if (string.includes(" ")) {
-      const stringArray: string[] = string.split(" ");
-      stringArray.splice(0, 1, stringArray[0][0] + ". ");
-      const truncatedString = stringArray.join(" ");
-      return truncatedString;
-    } else {
-      return string;
-    }
-  }
-  // console.log({ mode });
   const pickedMode: Mode = findCurrentModeInLinks(mode);
-  // console.log({ pickedMode });
-  // if (
-  //   !pickedMode ||
-  //   pickedMode.inputs === undefined ||
-  //   pickedMode.info === undefined
-  // )
-  //   return <>No mode is picked</>;
-
   const inputs: string[] = pickedMode.inputs;
   const inputsToRender: IRenderedItems = pick(state, pickedMode.inputs);
   const infoToRender: IRenderedItems = pick(state, pickedMode.info);
@@ -106,7 +73,7 @@ export default function FastCalc(): JSX.Element | null {
     dispatch(getAction(e, mode));
   };
 
-  const inputRenderSwitch = (key: string) => {
+  const renderInput = (key: string) => {
     switch (key) {
       case "flow":
         return (
@@ -186,7 +153,11 @@ export default function FastCalc(): JSX.Element | null {
             unit="-"
           >
             {Object.keys({ ...pipes }).map((option, index) => (
-              <option key={index} value={option} label={option}></option>
+              <option
+                key={index}
+                value={option}
+                label={getLabelForPipes(option)}
+              ></option>
             ))}
           </Select>
         );
@@ -218,7 +189,7 @@ export default function FastCalc(): JSX.Element | null {
     <div className="mode">
       <SelectionInfo infoProps={infoToRender} />
       <div className="grid-content">
-        <Form>{inputs.map((key: string) => inputRenderSwitch(key))}</Form>
+        <Form>{inputs.map(renderInput)}</Form>
         <Table tableData={tableData} />
       </div>
     </div>

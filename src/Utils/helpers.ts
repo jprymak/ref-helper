@@ -1,9 +1,9 @@
 import links from "../Data/links";
 import { Mode } from "../Data/links";
 
-export default function findCurrentModeInLinks(
+export const findCurrentModeInLinks = (
   modeToFind: string | undefined
-): Mode {
+): Mode => {
   if (!modeToFind) {
     return links[0];
   }
@@ -15,4 +15,23 @@ export default function findCurrentModeInLinks(
   }
 
   return links[0];
+};
+
+export const getLabelForPipes = (string: string) => {
+  const pIndex = string.indexOf("P");
+  return `${string.slice(0, 1).toUpperCase()}${string.slice(
+    1,
+    pIndex
+  )} ${string.slice(pIndex)}`;
+};
+
+export function truncate(string: string): string {
+  if (string.includes(" ")) {
+    const stringArray: string[] = string.split(" ");
+    stringArray.splice(0, 1, stringArray[0][0] + ". ");
+    const truncatedString = stringArray.join(" ");
+    return truncatedString;
+  } else {
+    return string;
+  }
 }

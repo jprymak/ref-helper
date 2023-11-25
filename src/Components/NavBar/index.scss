@@ -21,6 +21,7 @@
   &__list-item {
     &--active {
       border-bottom: 2px solid rgb(112, 224, 252);
+      font-weight: bold;
     }
   }
   &__link {

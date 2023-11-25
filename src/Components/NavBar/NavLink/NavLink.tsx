@@ -14,7 +14,7 @@ export default function NavLink({ data }: NavLinkProps) {
 
   const listItemClasses = classNames({
     "navbar__list-item": true,
-    "navbar__list-item--active": location.pathname === url!,
+    "navbar__list-item--active": location.pathname === url,
   });
 
   return (
