@@ -18,7 +18,7 @@
     "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-icons": "^4.3.1",
+    "react-icons": "^4.12.0",
     "react-router-dom": "^6.20.0",
     "typescript": "^4.6.4",
     "vite": "^5.0.2",
@@ -41,7 +41,8 @@
     "start": "vite --host",
     "build": "tsc && vite build",
     "preview": "vite preview --port 8080",
-    "deploy": "tsc && gh-pages -d dist"
+    "deploy": "tsc && gh-pages -d dist",
+    "eslint": "npx eslint ./src"
   },
   "eslintConfig": {
     "extends": [
@@ -62,6 +63,10 @@
     ]
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.12.0",
+    "@typescript-eslint/parser": "^6.12.0",
+    "eslint": "^8.54.0",
+    "eslint-plugin-react": "^7.33.2",
     "gh-pages": "^3.2.3",
     "sass": "^1.69.5",
     "vite-plugin-pwa": "^0.17.0"
