@@ -1,0 +1,104 @@
+@import "../../Styles/variables";
+
+.menu {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 320px;
+  max-width: 500px;
+  padding: 16px;
+  border-radius: 8px;
+  animation: fade-out 0.3s ease-out;
+
+  &[open] {
+    animation: fade-in 0.3s ease-out;
+    &::backdrop {
+      animation: backdrop-fade-in 0.3s ease-out forwards;
+    }
+  }
+
+  &::backdrop {
+    height: 100vh;
+    backdrop-filter: blur(3px);
+    cursor: pointer;
+    pointer-events: all;
+  }
+  &__icon-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+  & h3 {
+    margin-bottom: 1rem;
+  }
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  &__list-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+.dot {
+  min-width: 16px;
+  min-height: 16px;
+  border-radius: 50%;
+  &--red {
+    background-color: red;
+  }
+  &--green {
+    background-color: green;
+  }
+  &--orange {
+    background-color: orange;
+  }
+  &--white {
+    background-color: white;
+    border: 1px solid black;
+  }
+}
+
+/* Animation keyframes */
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: scaleY(0) translate(-50%, -50%);
+    display: none;
+  }
+
+  100% {
+    opacity: 1;
+    transform: scaleY(1) translate(-50%, -50%);
+    display: block;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    transform: scaleY(1) translate(-50%, -50%);
+    display: block;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scaleY(0) translate(-50%, -50%);
+    display: none;
+  }
+}
+
+@keyframes backdrop-fade-in {
+  0% {
+    background-color: rgb(0 0 0 / 0);
+  }
+
+  100% {
+    background-color: rgb(0 0 0 / 0.25);
+  }
+}
