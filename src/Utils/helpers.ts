@@ -7,13 +7,12 @@ export const findCurrentModeInLinks = (
   if (!modeToFind) {
     return links[0];
   }
-
+  
   for (const mode of links) {
     if (mode.id === modeToFind) {
       return mode;
     }
   }
-
   return links[0];
 };
 
@@ -28,7 +27,7 @@ export const getLabelForPipes = (string: string) => {
 export function truncate(string: string): string {
   if (string.includes(" ")) {
     const stringArray: string[] = string.split(" ");
-    stringArray.splice(0, 1, stringArray[0][0] + ". ");
+    stringArray.splice(0, 1, stringArray[0][0] + ".");
     const truncatedString = stringArray.join(" ");
     return truncatedString;
   } else {
