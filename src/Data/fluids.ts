@@ -3,11 +3,15 @@ export interface FluidType {
     parameters: FluidParametersLibrary;
 }
 
-export interface FluidParameters { density: number, specificHeat: number, conductivity: number, viscosity: number };
+export interface FluidParameters { density: number, specificHeat: number, conductivity: number, viscosity: number }
 
-interface FluidParametersLibrary {
+export interface FluidParametersLibrary {
     [key: string]: FluidParameters
 }
+
+export interface IFluidsLibrary {
+    [key: string]: FluidType;
+  }
 
 export const water: FluidType = {
     name: "Water",

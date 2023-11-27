@@ -5,11 +5,7 @@ import {
 } from "Utils/fluidMechanicsFormulas";
 
 import * as fluids from "../Data/fluids";
-import { FluidType } from "../Data/fluids";
-
-interface IFluidsLibrary {
-  [key: string]: FluidType;
-}
+import { IFluidsLibrary } from "../Data/fluids";
 
 const media: IFluidsLibrary = { ...fluids };
 
@@ -101,7 +97,7 @@ export const stateReducer = (
         ? state.temperature
         : "20";
 
-      let mediumParameters = getMediumParameters(
+      const mediumParameters = getMediumParameters(
         media[action.payload].parameters,
         temperature
       );
@@ -118,7 +114,7 @@ export const stateReducer = (
               specificHeat
             ).toString();
 
-      let dynamicViscosity = calculateDynamicViscosity(
+      const dynamicViscosity = calculateDynamicViscosity(
         mediumParameters.viscosity,
         density
       );
@@ -134,7 +130,7 @@ export const stateReducer = (
 
     case "setTemperature": {
       const temperature = action.payload;
-      let mediumParameters = getMediumParameters(
+      const mediumParameters = getMediumParameters(
         media[state.medium].parameters,
         temperature
       );
@@ -151,7 +147,7 @@ export const stateReducer = (
               specificHeat
             ).toString();
 
-      let dynamicViscosity = calculateDynamicViscosity(
+      const dynamicViscosity = calculateDynamicViscosity(
         mediumParameters.viscosity,
         density
       );

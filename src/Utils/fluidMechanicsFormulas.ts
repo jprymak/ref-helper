@@ -1,6 +1,13 @@
 import { PipesObject } from "Data/pipes";
 
-import { FluidParameters } from "Data/fluids";
+import { FluidParameters,  FluidParametersLibrary } from "Data/fluids";
+
+interface PipeResult{
+  opinion: string
+  pipe: string
+  unitPressureDrop: number
+  velocity: number
+}
 
 export function calculateVolumetricFlow(
   capacity: string,
@@ -85,7 +92,7 @@ export function calculateTotalPipePressureDrop(
 }
 
 export function getMediumParameters(
-  medium: any,
+  medium: FluidParametersLibrary,
   temperature: string
 ): FluidParameters {
   return medium[temperature];
@@ -120,12 +127,46 @@ export function selectPipe(
   }
 }
 
+function giveOpinionOnPipeSelection(
+  pipe: string,
+  unitPressureDrop: number,
+  velocityInMetersPerSeconds: number
+): string {
+  if (+pipe < 80) {
+    if (unitPressureDrop >= 120 && unitPressureDrop <= 340) {
+      return "recommended";
+    } else if (unitPressureDrop > 600 || velocityInMetersPerSeconds > 2) {
+      return "warning";
+    } else if (unitPressureDrop < 120 || velocityInMetersPerSeconds < 0.5) {
+      return "discouraged";
+    } else return "none";
+  }
+  if (+pipe >= 80) {
+    if (
+      unitPressureDrop >= 120 &&
+      unitPressureDrop <= 300 &&
+      velocityInMetersPerSeconds < 2.5
+    ) {
+      return "recommended";
+    } else if (
+      velocityInMetersPerSeconds >= 2.5 ||
+      unitPressureDrop > 600
+    ) {
+      return "warning";
+    } else if (unitPressureDrop < 70 || velocityInMetersPerSeconds < 1) {
+      return "discouraged";
+    } else return "none";
+  }
+
+  return "none";
+}
+
 export function generatePipeResults(
   seamPipes: PipesObject,
   flow: string,
   viscosity: number,
   density: number
-): any {
+): PipeResult[] {
   const results = [];
 
   for (const pipe of Object.keys(seamPipes)) {
@@ -141,39 +182,7 @@ export function generatePipeResults(
       viscosity
     ).toFixed(0);
 
-    function giveOpinionOnPipeSelection(
-      pipe: string,
-      unitPressureDrop: number,
-      velocityInMetersPerSeconds: number
-    ): string {
-      if (+pipe < 80) {
-        if (unitPressureDrop >= 120 && unitPressureDrop <= 340) {
-          return "recommended";
-        } else if (unitPressureDrop > 600 || velocityInMetersPerSeconds > 2) {
-          return "warning";
-        } else if (unitPressureDrop < 120 || velocityInMetersPerSeconds < 0.5) {
-          return "discouraged";
-        } else return "none";
-      }
-      if (+pipe >= 80) {
-        if (
-          unitPressureDrop >= 120 &&
-          unitPressureDrop <= 300 &&
-          velocityInMetersPerSeconds < 2.5
-        ) {
-          return "recommended";
-        } else if (
-          velocityInMetersPerSeconds >= 2.5 ||
-          unitPressureDrop > 600
-        ) {
-          return "warning";
-        } else if (unitPressureDrop < 70 || velocityInMetersPerSeconds < 1) {
-          return "discouraged";
-        } else return "none";
-      }
-
-      return "none";
-    }
+   
     const opinion = giveOpinionOnPipeSelection(
       pipe,
       unitPressureDrop,

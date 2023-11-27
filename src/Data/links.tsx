@@ -1,14 +1,3 @@
-import React from "react";
-import { FaCalculator } from "react-icons/fa";
-
-// export interface LinkObject {
-//   id: number;
-//   page: string;
-//   url: string;
-//   icon: JSX.Element;
-//   modes: Mode[];
-// }
-
 export interface Mode {
   id: string;
   url: string;

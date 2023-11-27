@@ -8,7 +8,7 @@ export const findCurrentModeInLinks = (
     return links[0];
   }
 
-  for (let mode of links) {
+  for (const mode of links) {
     if (mode.id === modeToFind) {
       return mode;
     }

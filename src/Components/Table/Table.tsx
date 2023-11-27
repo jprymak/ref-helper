@@ -1,3 +1,5 @@
+import React from "react";
+
 import "./Table.scss";
 
 interface ITableRow {
@@ -11,10 +13,7 @@ interface ITableProps {
   tableData: ITableRow[];
 }
 
-export default function Table({
-  tableData
-}: ITableProps): JSX.Element {
-  
+export default function Table({ tableData }: ITableProps): JSX.Element {
   return (
     <table className="table">
       <thead>
