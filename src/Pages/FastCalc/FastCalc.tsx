@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useEffect, useReducer } from "react";
 import { pick } from "lodash";
+import { useTranslation } from "react-i18next";
 
 import { Form } from "Components/Form";
 import { SelectionInfo } from "Components/SelectionInfo";
@@ -16,11 +17,7 @@ import getAction from "Data/getAction";
 import initialState from "Data/initialState";
 import { generatePipeResults } from "Utils/fluidMechanicsFormulas";
 
-import {
-  findCurrentModeInLinks,
-  getLabelForPipes,
-  truncate,
-} from "../../Utils/helpers";
+import { findCurrentModeInLinks, truncate } from "../../Utils/helpers";
 import { Mode } from "../../Data/links";
 
 import * as fluids from "Data/fluids";
@@ -48,6 +45,7 @@ export default function FastCalc(): JSX.Element | null {
   const [state, dispatch] = useReducer(stateReducer, initialState);
   const { mode } = useParams<{ mode: string }>();
   const { screenWidth } = useWindowSize();
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch({ type: "initialCalc" });
@@ -80,7 +78,7 @@ export default function FastCalc(): JSX.Element | null {
           <Input
             key={key}
             name="flow-input"
-            label="Flow"
+            label={t("flow")}
             onInputChange={handleInputChange}
             type="number"
             min={0}
@@ -94,7 +92,7 @@ export default function FastCalc(): JSX.Element | null {
           <Input
             key={key}
             name="delta-input"
-            label="Delta"
+            label={t("delta")}
             onInputChange={handleInputChange}
             type="number"
             min={0}
@@ -109,7 +107,7 @@ export default function FastCalc(): JSX.Element | null {
           <Input
             key={key}
             name="capacity-input"
-            label="Capacity"
+            label={t("capacity")}
             onInputChange={handleInputChange}
             type="number"
             min={0}
@@ -123,7 +121,7 @@ export default function FastCalc(): JSX.Element | null {
           <Select
             key={key}
             name="medium-select"
-            label="Medium"
+            label={t("medium")}
             onInputChange={handleInputChange}
             value={inputsToRender[key]}
             unit="-"
@@ -134,8 +132,14 @@ export default function FastCalc(): JSX.Element | null {
                 value={option}
                 label={
                   screenWidth > 850
-                    ? media[option].name
-                    : truncate(media[option].name)
+                    ? t(media[option].name, {
+                        solution: media[option].solution,
+                      })
+                    : truncate(
+                        t(media[option].name, {
+                          solution: media[option].solution,
+                        })
+                      )
                 }
               ></option>
             ))}
@@ -147,17 +151,13 @@ export default function FastCalc(): JSX.Element | null {
           <Select
             key={key}
             name="pipe-type-select"
-            label="Pipe type"
+            label={t("pipeType")}
             onInputChange={handleInputChange}
             value={inputsToRender[key]}
             unit="-"
           >
             {Object.keys({ ...pipes }).map((option, index) => (
-              <option
-                key={index}
-                value={option}
-                label={getLabelForPipes(option)}
-              ></option>
+              <option key={index} value={option} label={t(option)}></option>
             ))}
           </Select>
         );
@@ -167,7 +167,7 @@ export default function FastCalc(): JSX.Element | null {
           <Select
             key={key}
             name="temperature-select"
-            label="Temperature"
+            label={t("temperature")}
             onInputChange={handleInputChange}
             value={inputsToRender[key]}
             unit="°C"

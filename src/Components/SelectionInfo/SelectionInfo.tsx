@@ -3,12 +3,14 @@ import React from "react";
 import "./index.scss";
 
 import { IRenderedItems } from "Pages/FastCalc/FastCalc";
+import { useTranslation } from "react-i18next";
 
 interface SelectionInfoProps {
   infoProps: IRenderedItems;
 }
 
 export default function SelectionInfo({ infoProps }: SelectionInfoProps) {
+  const { t } = useTranslation();
   const renderSwitch = (key: string) => {
     switch (key) {
       case "pipe":
@@ -22,7 +24,7 @@ export default function SelectionInfo({ infoProps }: SelectionInfoProps) {
         return (
           <p key={key} className="selection-info__item">
             {" "}
-            Flow: {infoProps[key]} m3/h
+            {t("flow")}: <strong>{infoProps[key]}</strong> m3/h
           </p>
         );
       case "velocity":

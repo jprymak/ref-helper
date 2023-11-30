@@ -1,5 +1,6 @@
 export interface FluidType {
     name: string;
+    solution: string;
     parameters: FluidParametersLibrary;
 }
 
@@ -14,19 +15,9 @@ export interface IFluidsLibrary {
   }
 
 export const water: FluidType = {
-    name: "Water",
+    name: "water",
+    solution: "N/A",
     parameters:{
-    // "-10" : { density: 998, specificHeat: 4.278, conductivity: 0.5424, viscosity: 2.646 },
-    // "-9" : {  density: 998, specificHeat: 4.27, conductivity: 0.5442, viscosity: 2.534 },
-    // "-8" : {  density: 999, specificHeat: 4.262, conductivity: 0.546, viscosity: 2.43 },
-    // "-7" : {  density: 999, specificHeat: 4.255, conductivity: 0.5479, viscosity: 2.332 },
-    // "-6" : {  density: 999, specificHeat: 4.249, conductivity: 0.5497, viscosity: 2.241 },
-    // "-5" : {  density: 999, specificHeat: 4.243, conductivity: 0.5516, viscosity: 2.155 },
-    // "-4" : {  density: 999, specificHeat: 4.237, conductivity: 0.5534, viscosity: 2.073 },
-    // "-3" : {  density: 1000, specificHeat: 4.232, conductivity: 0.5553, viscosity: 1.997 },
-    // "-2" : {  density: 1000, specificHeat: 4.228, conductivity: 0.5572, viscosity: 1.925 },
-    // "-1" : {  density: 1000, specificHeat: 4.223, conductivity: 0.5591, viscosity: 1.857 },
-    // "0" : { density: 1000, specificHeat: 4.219, conductivity: 0.561, viscosity: 1.793 },
     "1" : { density: 1000, specificHeat: 4.216, conductivity: 0.5629, viscosity: 1.732 },
     "2" : { density: 1000, specificHeat: 4.212, conductivity: 0.5648, viscosity: 1.675 },
     "3" : { density: 1000, specificHeat: 4.209, conductivity: 0.5667, viscosity: 1.62 },
@@ -154,7 +145,8 @@ export const water: FluidType = {
 
 
 export const ethyleneGlycol25 : FluidType = {
-    name: "Ethylene Glycol 25%",
+    name: "ethyleneGlycol",
+    solution: "25%",
     parameters:{
     "-11": { density: 1050, specificHeat: 3.654, conductivity: 0.4313, viscosity: 5.527 },
     "-10": { density: 1050, specificHeat: 3.656, conductivity: 0.4329, viscosity: 5.302 },
@@ -293,7 +285,8 @@ export const ethyleneGlycol25 : FluidType = {
 };
 
 export const ethyleneGlycol30 : FluidType = {
-    name: "Ethylene Glycol 30%",
+    name: "ethyleneGlycol",
+    solution: "30%",
     parameters:{
     "-14": { density: 1060, specificHeat: 3.551, conductivity: 0.410, viscosity: 7.671 },
     "-13": { density: 1060, specificHeat: 3.554, conductivity: 0.411, viscosity: 7.333 },
@@ -435,7 +428,8 @@ export const ethyleneGlycol30 : FluidType = {
 };
 
 export const ethyleneGlycol35 : FluidType = {
-    name: "Ethylene Glycol 35%",
+    name: "ethyleneGlycol",
+    solution: "35%",
     parameters:{
     "-19": { density: 1070, specificHeat: 3.439, conductivity: 0.387, viscosity: 11.90 },
     "-18": { density: 1070, specificHeat: 3.442, conductivity: 0.388, viscosity: 11.32 },
@@ -582,7 +576,8 @@ export const ethyleneGlycol35 : FluidType = {
 };
 
 export const ethyleneGlycol40 : FluidType = {
-    name: "Ethylene Glycol 40%",
+    name: "ethyleneGlycol",
+    solution: "40%",
     parameters:{
     "-24": { density: 1070, specificHeat: 3.322, conductivity: 0.366, viscosity: 19.010 },
     "-23": { density: 1070, specificHeat: 3.326, conductivity: 0.367, viscosity: 18.000 },
@@ -734,7 +729,8 @@ export const ethyleneGlycol40 : FluidType = {
 };
 
 export const propyleneGlycol25 : FluidType = {
-    name: "Propylene Glycol 25%",
+    name: "propyleneGlycol",
+    solution: "25%",
     parameters:{
     "-9": { density: 1040, specificHeat: 3.844, conductivity: 0.4299, viscosity: 8.425 },
     "-8": { density: 1030, specificHeat: 3.846, conductivity: 0.4314, viscosity: 8.012 },
@@ -871,7 +867,8 @@ export const propyleneGlycol25 : FluidType = {
 };
 
 export const propyleneGlycol30 : FluidType = {
-    name: "Propylene Glycol 30%",
+    name: "propyleneGlycol",
+    solution: "30%",
     parameters:{
     "-13": { density: 1040, specificHeat: 3.76, conductivity: 0.4055, viscosity: 14.24 },
     "-12": { density: 1040, specificHeat: 3.763, conductivity: 0.4069, viscosity: 13.45 },
@@ -1012,7 +1009,8 @@ export const propyleneGlycol30 : FluidType = {
 };
 
 export const propyleneGlycol35 : FluidType = {
-    name: "Propylene Glycol 35%",
+    name: "propyleneGlycol",
+    solution: "35%",
     parameters:{
     "-18": { density: 1050, specificHeat: 3.665, conductivity: 0.38, viscosity: 26.63 },
     "-17": { density: 1050, specificHeat: 3.668, conductivity: 0.38, viscosity: 24.97 },
@@ -1158,7 +1156,8 @@ export const propyleneGlycol35 : FluidType = {
 };
 
 export const propyleneGlycol40 : FluidType = {
-    name: "Propylene Glycol 40%",
+    name: "propyleneGlycol",
+    solution: "40%",
     parameters:{
     "-22": { density: 1050, specificHeat: 3.565, conductivity: 0.361, viscosity: 48.530 },
     "-21": { density: 1050, specificHeat: 3.568, conductivity: 0.362, viscosity: 45.180 },

@@ -1,6 +1,7 @@
 import React from "react";
 
 import "./Table.scss";
+import { useTranslation } from "react-i18next";
 
 interface ITableRow {
   pipe: string;
@@ -14,13 +15,15 @@ interface ITableProps {
 }
 
 export default function Table({ tableData }: ITableProps): JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <table className="table">
       <thead>
         <tr>
-          <td>Diameter [DN]</td>
-          <td>Velocity [m/s]</td>
-          <td>Pressure drop [Pa/m]</td>
+          <td>{t("diameter")} [DN]</td>
+          <td>{t("velocity")} [m/s]</td>
+          <td>{t("pressureDrop")} [Pa/m]</td>
         </tr>
       </thead>
 

@@ -9,6 +9,7 @@
   padding: 16px;
   border-radius: 8px;
   animation: fade-out 0.3s ease-out;
+  font-size: 2rem;
 
   &[open] {
     animation: fade-in 0.3s ease-out;

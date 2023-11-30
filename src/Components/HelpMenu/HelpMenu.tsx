@@ -3,6 +3,7 @@ import React from "react";
 import "./index.scss";
 import { IoMdClose } from "react-icons/io";
 import { IconButton } from "Components/IconButton";
+import { useTranslation } from "react-i18next";
 
 interface HelpMenuProps {
   isModalOpen: boolean;
@@ -11,6 +12,7 @@ interface HelpMenuProps {
 }
 
 function HelpMenu({ isModalOpen, closeModal, children }: HelpMenuProps) {
+  const { t } = useTranslation();
   const ref = useRef<null | HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -27,23 +29,23 @@ function HelpMenu({ isModalOpen, closeModal, children }: HelpMenuProps) {
         <IconButton icon={<IoMdClose />} onClick={closeModal} />
       </div>
       <section>
-        <h3>Table colors</h3>
+        <h3>{t("tableLegend")}</h3>
         <ul className="menu__list">
           <li className="menu__list-item">
             <div className="dot dot--green"></div>
-            <p>recommended</p>
+            <p>{t("recommended")}</p>
           </li>
           <li className="menu__list-item">
             <div className="dot dot--white"></div>
-            <p>acceptable</p>
+            <p>{t("acceptable")}</p>
           </li>
           <li className="menu__list-item">
             <div className="dot dot--red"></div>
-            <p>discouraged - too high velocity or pressure drop</p>
+            <p>{t("diameterTooLow")}</p>
           </li>
           <li className="menu__list-item">
             <div className="dot dot--orange"></div>
-            <p>diameter is too wide </p>
+            <p>{t("diameterTooWide")}</p>
           </li>
         </ul>
       </section>

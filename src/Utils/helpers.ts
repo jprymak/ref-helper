@@ -16,14 +16,6 @@ export const findCurrentModeInLinks = (
   return links[0];
 };
 
-export const getLabelForPipes = (string: string) => {
-  const pIndex = string.indexOf("P");
-  return `${string.slice(0, 1).toUpperCase()}${string.slice(
-    1,
-    pIndex
-  )} ${string.slice(pIndex)}`;
-};
-
 export function truncate(string: string): string {
   if (string.includes(" ")) {
     const stringArray: string[] = string.split(" ");

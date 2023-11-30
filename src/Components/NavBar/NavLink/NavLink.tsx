@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { Link, useLocation } from "react-router-dom";
 
@@ -11,7 +12,8 @@ interface NavLinkProps {
 }
 
 export default function NavLink({ data }: NavLinkProps) {
-  const { url, name } = data;
+  const { t } = useTranslation();
+  const { url, stringPath } = data;
   const location = useLocation();
 
   const listItemClasses = classNames({
@@ -22,7 +24,7 @@ export default function NavLink({ data }: NavLinkProps) {
   return (
     <li className={listItemClasses}>
       <Link className="navbar__link" to={url}>
-        {name}
+        {t(stringPath)}
       </Link>
     </li>
   );

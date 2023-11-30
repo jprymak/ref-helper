@@ -27,9 +27,9 @@ function Input({
 }: IProps) {
   return (
     <>
-      <label htmlFor={name}>{label}:</label>
+      <label htmlFor={name}>{label}</label>
       <div style={{ display: "flex", flexDirection: "column" }}>
-      {type === "range" ? <span className="input-value">{value}</span> : null}
+        {type === "range" ? <span className="input-value">{value}</span> : null}
         <input
           onChange={onInputChange}
           id={name}
@@ -40,7 +40,6 @@ function Input({
           value={value}
           step={step}
         />
-        
       </div>
 
       <span>{unit}</span>
