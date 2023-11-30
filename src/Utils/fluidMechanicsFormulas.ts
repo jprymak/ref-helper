@@ -10,18 +10,18 @@ interface PipeResult{
 }
 
 export function calculateVolumetricFlow(
-  capacity: string,
-  delta: string,
+  capacity: number,
+  delta: number,
   density: number,
   specificHeat: number
 ): number {
-  return +((+capacity / +delta / density / specificHeat) * 3600).toFixed(
+  return +((capacity / delta / density / specificHeat) * 3600).toFixed(
     2
   ); /* l/s */
 }
 
 export function calculateVelocity(
-  volumetricFlow: string,
+  volumetricFlow: number,
   innerDiameter: number
 ): number {
   return +(+volumetricFlow / (3.14 * (innerDiameter / 2) ** 2) / 3600).toFixed(
@@ -93,14 +93,14 @@ export function calculateTotalPipePressureDrop(
 
 export function getMediumParameters(
   medium: FluidParametersLibrary,
-  temperature: string
+  temperature: number
 ): FluidParameters {
   return medium[temperature];
 }
 
 export function selectPipe(
   seamPipes: PipesObject,
-  flow: string,
+  flow: number,
   viscosity: number,
   density: number,
   allowedPressureDrop: number,
@@ -127,7 +127,7 @@ export function selectPipe(
   }
 }
 
-function giveOpinionOnPipeSelection(
+function getPipeSelectionOpinion(
   pipe: string,
   unitPressureDrop: number,
   velocityInMetersPerSeconds: number
@@ -163,7 +163,7 @@ function giveOpinionOnPipeSelection(
 
 export function generatePipeResults(
   seamPipes: PipesObject,
-  flow: string,
+  flow: number,
   viscosity: number,
   density: number
 ): PipeResult[] {
@@ -183,7 +183,7 @@ export function generatePipeResults(
     ).toFixed(0);
 
    
-    const opinion = giveOpinionOnPipeSelection(
+    const opinion = getPipeSelectionOpinion(
       pipe,
       unitPressureDrop,
       velocityInMetersPerSeconds

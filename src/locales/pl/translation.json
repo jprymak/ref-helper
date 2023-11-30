@@ -20,5 +20,8 @@
   "seamlessPipes": "Rura bez szwu",
   "ethyleneGlycol": "Glikol Etylenowy {{solution}}",
   "propyleneGlycol": "Glikol Propylenowy {{solution}}",
-  "water": "Woda"
+  "water": "Woda",
+  "flowErrorMessage": "Przepływ musi być większy niż 0",
+  "capacityErrorMessage": "Wydajność musi być większa niż 0",
+  "deltaErrorMessage": "Delta musi być większa niż 0"
 }

@@ -1,11 +1,9 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useEffect, useReducer } from "react";
-import { pick } from "lodash";
 import { useTranslation } from "react-i18next";
-
+import { pick } from "lodash";
 import { Form } from "Components/Form";
-import { SelectionInfo } from "Components/SelectionInfo";
 import { Input } from "Components/Form/Input";
 import { Select } from "Components/Form/Select";
 import { Table } from "Components/Table";
@@ -34,10 +32,6 @@ interface IPipesLibrary {
   [key: string]: PipesObject;
 }
 
-export interface IRenderedItems {
-  [key: string]: string | number;
-}
-
 const media: IFluidsLibrary = { ...fluids };
 const pipeTypes: IPipesLibrary = { ...pipes };
 
@@ -60,8 +54,7 @@ export default function FastCalc(): JSX.Element | null {
 
   const pickedMode: Mode = findCurrentModeInLinks(mode);
   const inputs: string[] = pickedMode.inputs;
-  const inputsToRender: IRenderedItems = pick(state, pickedMode.inputs);
-  const infoToRender: IRenderedItems = pick(state, pickedMode.info);
+  const inputsToRender = pick(state, pickedMode.inputs);
 
   const handleInputChange = (
     e:
@@ -82,8 +75,9 @@ export default function FastCalc(): JSX.Element | null {
             onInputChange={handleInputChange}
             type="number"
             min={0}
-            value={inputsToRender[key]}
+            value={inputsToRender[key] || ""}
             unit="m3/h"
+            errorMessage={state.errors.flow?.message}
           />
         );
 
@@ -97,8 +91,9 @@ export default function FastCalc(): JSX.Element | null {
             type="number"
             min={0}
             max={50}
-            value={inputsToRender[key]}
+            value={inputsToRender[key] || ""}
             unit="K"
+            errorMessage={state.errors.delta?.message}
           />
         );
 
@@ -111,8 +106,9 @@ export default function FastCalc(): JSX.Element | null {
             onInputChange={handleInputChange}
             type="number"
             min={0}
-            value={inputsToRender[key]}
+            value={inputsToRender[key] || ""}
             unit="kW"
+            errorMessage={state.errors.capacity?.message}
           />
         );
 
@@ -123,7 +119,7 @@ export default function FastCalc(): JSX.Element | null {
             name="medium-select"
             label={t("medium")}
             onInputChange={handleInputChange}
-            value={inputsToRender[key]}
+            value={inputsToRender[key] || ""}
             unit="-"
           >
             {Object.keys(media).map((option, index) => (
@@ -153,7 +149,7 @@ export default function FastCalc(): JSX.Element | null {
             name="pipe-type-select"
             label={t("pipeType")}
             onInputChange={handleInputChange}
-            value={inputsToRender[key]}
+            value={inputsToRender[key] || ""}
             unit="-"
           >
             {Object.keys({ ...pipes }).map((option, index) => (
@@ -169,7 +165,7 @@ export default function FastCalc(): JSX.Element | null {
             name="temperature-select"
             label={t("temperature")}
             onInputChange={handleInputChange}
-            value={inputsToRender[key]}
+            value={inputsToRender[key] || ""}
             unit="°C"
           >
             {Object.keys(media[state.medium].parameters)
@@ -187,7 +183,12 @@ export default function FastCalc(): JSX.Element | null {
 
   return (
     <div className="mode">
-      <SelectionInfo infoProps={infoToRender} />
+      <div className="selection-info">
+        <p className="selection-info__item">
+          {t("flow")}: <strong>{state.flow}</strong> m3/h
+        </p>
+      </div>
+
       <div className="grid-content">
         <Form>{inputs.map(renderInput)}</Form>
         <Table tableData={tableData} />

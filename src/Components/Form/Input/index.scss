@@ -1,7 +1,14 @@
 @import "src/Styles/variables";
 
-input {
-  width: 100%;
+.input--error {
+  background-color: pink;
+}
+
+.error-message {
+  color: red;
+  font-weight: 600;
+  font-size: 1.7rem;
+  grid-column: 1/4;
 }
 
 label,
@@ -12,11 +19,11 @@ span {
 
 input[type="number"],
 select {
+  font-size: 1.8rem;
   padding: 5px;
   font-weight: 600;
   cursor: pointer;
   border-radius: 5px;
-  border: 0px solid #18d501;
   max-width: 180px;
 }
 

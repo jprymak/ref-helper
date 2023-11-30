@@ -1,6 +1,7 @@
 import React from "react";
 
 import "./index.scss";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   name: string;
@@ -12,6 +13,7 @@ interface IProps {
   value: string | number;
   unit: string;
   step?: string;
+  errorMessage?: string;
 }
 
 function Input({
@@ -24,13 +26,16 @@ function Input({
   value,
   unit,
   step,
+  errorMessage,
 }: IProps) {
+  const { t } = useTranslation();
   return (
     <>
       <label htmlFor={name}>{label}</label>
       <div style={{ display: "flex", flexDirection: "column" }}>
         {type === "range" ? <span className="input-value">{value}</span> : null}
         <input
+          className={errorMessage && "input--error"}
           onChange={onInputChange}
           id={name}
           name={name}
@@ -41,8 +46,8 @@ function Input({
           step={step}
         />
       </div>
-
       <span>{unit}</span>
+      {errorMessage && <p className="error-message">{t(errorMessage)}</p>}
     </>
   );
 }

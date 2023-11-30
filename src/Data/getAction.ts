@@ -20,7 +20,7 @@ const getAction = (
     case "temperature-select":
       return {
         type: "setTemperature",
-        payload: e.target.value,
+        payload: +e.target.value,
         mode: mode || "",
       };
     default:

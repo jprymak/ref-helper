@@ -15,20 +15,46 @@ export type FastCalcAction =
   | { type: "setDelta"; payload: string }
   | { type: "setFlow"; payload: string }
   | { type: "setMedium"; payload: string; mode: string }
-  | { type: "setTemperature"; payload: string; mode: string }
+  | { type: "setTemperature"; payload: number; mode: string }
   | { type: "setPipeType"; payload: string };
 
-export interface FastCalcState {
-  [key: string]: string | number;
-  capacity: string;
-  temperature: string;
-  flow: string;
-  delta: string;
+
+  interface Error{
+   message: string
+  }
+
+
+export interface ErrorsObject{
+  capacity?: Error
+  flow?: Error
+  delta?: Error;
+}
+
+export interface FastCalcState{
+  capacity: number;
+  temperature: number;
+  flow: number;
+  delta: number;
   medium: string;
   dynamicViscosity: number;
   density: number;
   specificHeat: number;
   pipeType: string;
+  errors: ErrorsObject
+}
+
+const validate = (state: FastCalcState) =>{
+  const errors: ErrorsObject = {}
+if(state.capacity<=0 || !state.capacity){
+  errors.capacity = {message: "capacityErrorMessage"}
+}
+if(state.flow<=0 || !state.flow){
+  errors.flow = {message: "flowErrorMessage"}
+}
+if(state.delta<=0 || !state.delta){
+  errors.delta = {message: "deltaErrorMessage"}
+}
+return {...state, errors}
 }
 
 export const stateReducer = (
@@ -54,38 +80,37 @@ export const stateReducer = (
         state.delta,
         density,
         specificHeat
-      ).toString();
+      )
 
-      return { ...state, flow, density, dynamicViscosity, specificHeat };
+      return validate({ ...state, flow, density, dynamicViscosity, specificHeat });
     }
 
     case "setFlow": {
-      const flow = Number(action.payload) > 1000 ? "1000" : action.payload;
-
-      return { ...state, flow };
+      const flow = +action.payload > 1000 ? 1000 : +action.payload;
+      return validate({ ...state, flow })
     }
     case "setCapacity": {
-      const capacity = +action.payload > 10000 ? "10000" : action.payload;
+      const capacity = +action.payload > 10000 ? 10000 : +action.payload;
       const flow = calculateVolumetricFlow(
         capacity,
         state.delta,
         state.density,
         state.specificHeat
-      ).toString();
+      );
 
-      return { ...state, capacity, flow };
+      return validate({ ...state, capacity, flow })
     }
 
     case "setDelta": {
-      const delta = +action.payload >= 50 ? "50" : action.payload;
+      const delta = +action.payload >= 50 ? 50 : +action.payload;
       const flow = calculateVolumetricFlow(
         state.capacity,
         delta,
         state.density,
         state.specificHeat
-      ).toString();
+      )
 
-      return { ...state, delta, flow };
+      return validate({ ...state, delta, flow })
     }
 
     case "setPipeType": {
@@ -95,7 +120,7 @@ export const stateReducer = (
     case "setMedium": {
       const temperature = media[action.payload].parameters[state.temperature]
         ? state.temperature
-        : "20";
+        : 20;
 
       const mediumParameters = getMediumParameters(
         media[action.payload].parameters,
@@ -112,7 +137,7 @@ export const stateReducer = (
               state.delta,
               density,
               specificHeat
-            ).toString();
+            )
 
       const dynamicViscosity = calculateDynamicViscosity(
         mediumParameters.viscosity,
@@ -145,7 +170,7 @@ export const stateReducer = (
               state.delta,
               density,
               specificHeat
-            ).toString();
+            )
 
       const dynamicViscosity = calculateDynamicViscosity(
         mediumParameters.viscosity,

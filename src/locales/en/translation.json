@@ -21,5 +21,8 @@
   "seamlessPipes": "Seamless pipe",
   "ethyleneGlycol": "Ethylene Glycol {{solution}}",
   "propyleneGlycol": "Propylene Glycol {{solution}}",
-  "water": "Water"
+  "water": "Water",
+  "flowErrorMessage": "Flow must be higher than 0",
+  "capacityErrorMessage": "Capacity must be higher than 0",
+  "deltaErrorMessage": "Delta must be higher than 0"
 }

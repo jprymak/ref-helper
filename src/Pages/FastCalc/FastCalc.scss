@@ -8,6 +8,18 @@
   padding: 1rem;
 }
 
+.selection-info {
+  background-color: $primary-bg;
+  font-size: 2.3rem;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 1.5rem;
+  display: grid;
+  row-gap: 0.5rem;
+  margin: 4rem 2rem;
+  box-shadow: 3px 3px 3px rgb(51, 109, 119);
+}
+
 @media screen and (min-width: 750px) {
   .grid-content {
     grid-template-columns: 1fr 1fr;
