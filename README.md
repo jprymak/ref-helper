@@ -12,6 +12,11 @@ Currently, only seam and seamless steel pipes selection is supported.
 - pipe selection by capacity
 - pipe diameter range from DN15 to DN450
 
+## Language support
+
+- polish
+- english
+
 ## How to run this app
 
 ### Visit demo page
@@ -39,3 +44,4 @@ While visiting demo page, it is possible to install this app as PWA by clicking 
 - classnames
 - gh-pages
 - vite-plugin-pwa
+- i18n
