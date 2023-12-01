@@ -16,7 +16,7 @@ import initialState from "Data/initialState";
 import { generatePipeResults } from "Utils/fluidMechanicsFormulas";
 
 import { findCurrentModeInLinks, truncate } from "../../Utils/helpers";
-import { Mode } from "../../Data/links";
+import { FastCalcStateKeyType, Mode } from "../../Data/links";
 
 import * as fluids from "Data/fluids";
 import { FluidType } from "Data/fluids";
@@ -53,7 +53,7 @@ export default function FastCalc(): JSX.Element | null {
   );
 
   const pickedMode: Mode = findCurrentModeInLinks(mode);
-  const inputs: string[] = pickedMode.inputs;
+  const inputs = pickedMode.inputs;
   const inputsToRender = pick(state, pickedMode.inputs);
 
   const handleInputChange = (
@@ -64,7 +64,7 @@ export default function FastCalc(): JSX.Element | null {
     dispatch(getAction(e, mode));
   };
 
-  const renderInput = (key: string) => {
+  const renderInput = (key: FastCalcStateKeyType) => {
     switch (key) {
       case "flow":
         return (
@@ -75,7 +75,7 @@ export default function FastCalc(): JSX.Element | null {
             onInputChange={handleInputChange}
             type="number"
             min={0}
-            value={inputsToRender[key] || ""}
+            value={inputsToRender[key]}
             unit="m3/h"
             errorMessage={state.errors.flow?.message}
           />
@@ -91,7 +91,7 @@ export default function FastCalc(): JSX.Element | null {
             type="number"
             min={0}
             max={50}
-            value={inputsToRender[key] || ""}
+            value={inputsToRender[key]}
             unit="K"
             errorMessage={state.errors.delta?.message}
           />
@@ -106,7 +106,7 @@ export default function FastCalc(): JSX.Element | null {
             onInputChange={handleInputChange}
             type="number"
             min={0}
-            value={inputsToRender[key] || ""}
+            value={inputsToRender[key]}
             unit="kW"
             errorMessage={state.errors.capacity?.message}
           />
@@ -119,7 +119,7 @@ export default function FastCalc(): JSX.Element | null {
             name="medium-select"
             label={t("medium")}
             onInputChange={handleInputChange}
-            value={inputsToRender[key] || ""}
+            value={inputsToRender[key]}
             unit="-"
           >
             {Object.keys(media).map((option, index) => (
@@ -149,7 +149,7 @@ export default function FastCalc(): JSX.Element | null {
             name="pipe-type-select"
             label={t("pipeType")}
             onInputChange={handleInputChange}
-            value={inputsToRender[key] || ""}
+            value={inputsToRender[key]}
             unit="-"
           >
             {Object.keys({ ...pipes }).map((option, index) => (

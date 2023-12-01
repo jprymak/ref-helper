@@ -1,9 +1,13 @@
+import type { FastCalcState } from "Reducers/fastCalcReducer";
+
+export type FastCalcStateKeyType = keyof FastCalcState;
+
 export interface Mode {
   id: string;
   url: string;
   stringPath: string;
   info: string[];
-  inputs: string[];
+  inputs: FastCalcStateKeyType[];
 }
 
 const links: Mode[] = [
